@@ -1,0 +1,61 @@
+case,dataset,suite,system_name,fault,fault_description,root_cause_service,inject_time,time_start,time_end,duration_minutes,normal_timesteps,faulty_timesteps
+re2ob_checkoutservice_cpu_1,RE2-OB,RE2,Online Boutique,cpu,CPU stress,checkoutservice,1705354566,1705353846,1705355286,24.0,720,721
+re2ob_checkoutservice_delay_1,RE2-OB,RE2,Online Boutique,delay,network delay,checkoutservice,1705666511,1705665791,1705667231,24.0,720,721
+re2ob_checkoutservice_loss_1,RE2-OB,RE2,Online Boutique,loss,network packet loss,checkoutservice,1705376266,1705375546,1705376986,24.0,720,721
+re2ob_checkoutservice_socket_1,RE2-OB,RE2,Online Boutique,socket,socket exhaustion,checkoutservice,1705656313,1705655593,1705657033,24.0,720,721
+re2ob_currencyservice_cpu_1,RE2-OB,RE2,Online Boutique,cpu,CPU stress,currencyservice,1705682817,1705682097,1705683537,24.0,720,721
+re2ob_currencyservice_delay_1,RE2-OB,RE2,Online Boutique,delay,network delay,currencyservice,1705702012,1705701292,1705702732,24.0,720,721
+re2ob_currencyservice_loss_1,RE2-OB,RE2,Online Boutique,loss,network packet loss,currencyservice,1705388941,1705388221,1705389661,24.0,720,721
+re2ob_currencyservice_socket_1,RE2-OB,RE2,Online Boutique,socket,socket exhaustion,currencyservice,1705479661,1705478941,1705480381,24.0,720,721
+re2ob_emailservice_cpu_1,RE2-OB,RE2,Online Boutique,cpu,CPU stress,emailservice,1705350165,1705349445,1705350885,24.0,720,721
+re2ob_emailservice_delay_1,RE2-OB,RE2,Online Boutique,delay,network delay,emailservice,1705733346,1705732626,1705734066,24.0,720,721
+re2ob_emailservice_loss_1,RE2-OB,RE2,Online Boutique,loss,network packet loss,emailservice,1705351632,1705350912,1705352352,24.0,720,721
+re2ob_emailservice_socket_1,RE2-OB,RE2,Online Boutique,socket,socket exhaustion,emailservice,1705726260,1705725540,1705726980,24.0,720,721
+re2ob_productcatalogservice_cpu_1,RE2-OB,RE2,Online Boutique,cpu,CPU stress,productcatalogservice,1705340542,1705339822,1705341262,24.0,720,721
+re2ob_productcatalogservice_delay_1,RE2-OB,RE2,Online Boutique,delay,network delay,productcatalogservice,1705394578,1705393858,1705395298,24.0,720,721
+re2ob_productcatalogservice_loss_1,RE2-OB,RE2,Online Boutique,loss,network packet loss,productcatalogservice,1705342830,1705342110,1705343550,24.0,720,721
+re2ob_productcatalogservice_socket_1,RE2-OB,RE2,Online Boutique,socket,socket exhaustion,productcatalogservice,1705392233,1705391513,1705392953,24.0,720,721
+re2ob_recommendationservice_cpu_1,RE2-OB,RE2,Online Boutique,cpu,CPU stress,recommendationservice,1705345765,1705345045,1705346485,24.0,720,721
+re2ob_recommendationservice_delay_1,RE2-OB,RE2,Online Boutique,delay,network delay,recommendationservice,1705400377,1705399657,1705401097,24.0,720,721
+re2ob_recommendationservice_loss_1,RE2-OB,RE2,Online Boutique,loss,network packet loss,recommendationservice,1705347231,1705346511,1705347951,24.0,720,721
+re2ob_recommendationservice_socket_1,RE2-OB,RE2,Online Boutique,socket,socket exhaustion,recommendationservice,1705398242,1705397522,1705398962,24.0,720,721
+re2ss_carts_cpu_1,RE2-SS,RE2,Sock Shop,cpu,CPU stress,carts,1705596179,1705595459,1705596899,24.0,720,721
+re2ss_carts_delay_1,RE2-SS,RE2,Sock Shop,delay,network delay,carts,1705662624,1705661904,1705663344,24.0,720,721
+re2ss_carts_loss_1,RE2-SS,RE2,Sock Shop,loss,network packet loss,carts,1705664209,1705663489,1705664929,24.0,720,721
+re2ss_carts_socket_1,RE2-SS,RE2,Sock Shop,socket,socket exhaustion,carts,1705632937,1705632217,1705633657,24.0,720,721
+re2ss_catalogue_cpu_1,RE2-SS,RE2,Sock Shop,cpu,CPU stress,catalogue,1705600751,1705600031,1705601471,24.0,720,721
+re2ss_catalogue_delay_1,RE2-SS,RE2,Sock Shop,delay,network delay,catalogue,1705640134,1705639414,1705640854,24.0,720,721
+re2ss_catalogue_loss_1,RE2-SS,RE2,Sock Shop,loss,network packet loss,catalogue,1705602312,1705601592,1705603032,24.0,720,721
+re2ss_catalogue_socket_1,RE2-SS,RE2,Sock Shop,socket,socket exhaustion,catalogue,1705638535,1705637815,1705639255,24.0,720,721
+re2ss_orders_cpu_1,RE2-SS,RE2,Sock Shop,cpu,CPU stress,orders,1705605431,1705604711,1705606151,24.0,720,721
+re2ss_orders_delay_1,RE2-SS,RE2,Sock Shop,delay,network delay,orders,1705644992,1705644272,1705645712,24.0,720,721
+re2ss_orders_loss_1,RE2-SS,RE2,Sock Shop,loss,network packet loss,orders,1705607010,1705606290,1705607730,24.0,720,721
+re2ss_orders_socket_1,RE2-SS,RE2,Sock Shop,socket,socket exhaustion,orders,1705643392,1705642672,1705644112,24.0,720,721
+re2ss_payment_cpu_1,RE2-SS,RE2,Sock Shop,cpu,CPU stress,payment,1705610176,1705609456,1705610896,24.0,720,721
+re2ss_payment_delay_1,RE2-SS,RE2,Sock Shop,delay,network delay,payment,1705650625,1705649905,1705651345,24.0,720,721
+re2ss_payment_loss_1,RE2-SS,RE2,Sock Shop,loss,network packet loss,payment,1705611754,1705611034,1705612474,24.0,720,721
+re2ss_payment_socket_1,RE2-SS,RE2,Sock Shop,socket,socket exhaustion,payment,1705649020,1705648300,1705649740,24.0,720,721
+re2ss_user_cpu_1,RE2-SS,RE2,Sock Shop,cpu,CPU stress,user,1705614889,1705614169,1705615609,24.0,720,721
+re2ss_user_delay_1,RE2-SS,RE2,Sock Shop,delay,network delay,user,1705656234,1705655514,1705656954,24.0,720,721
+re2ss_user_loss_1,RE2-SS,RE2,Sock Shop,loss,network packet loss,user,1705616460,1705615740,1705617180,24.0,720,721
+re2ss_user_socket_1,RE2-SS,RE2,Sock Shop,socket,socket exhaustion,user,1705654636,1705653916,1705655356,24.0,720,721
+re2tt_ts-auth-service_cpu_1,RE2-TT,RE2,Train Ticket,cpu,CPU stress,ts-auth-service,1705918105,1705917385,1705918825,24.0,720,721
+re2tt_ts-auth-service_delay_1,RE2-TT,RE2,Train Ticket,delay,network delay,ts-auth-service,1705921865,1705921145,1705922585,24.0,720,721
+re2tt_ts-auth-service_loss_1,RE2-TT,RE2,Train Ticket,loss,network packet loss,ts-auth-service,1705983003,1705982283,1705983723,24.0,720,721
+re2tt_ts-auth-service_socket_1,RE2-TT,RE2,Train Ticket,socket,socket exhaustion,ts-auth-service,1705981508,1705980788,1705982228,24.0,720,721
+re2tt_ts-order-service_cpu_1,RE2-TT,RE2,Train Ticket,cpu,CPU stress,ts-order-service,1705935125,1705934405,1705935845,24.0,720,721
+re2tt_ts-order-service_delay_1,RE2-TT,RE2,Train Ticket,delay,network delay,ts-order-service,1705952245,1705951525,1705952965,24.0,720,721
+re2tt_ts-order-service_loss_1,RE2-TT,RE2,Train Ticket,loss,network packet loss,ts-order-service,1705988266,1705987546,1705988986,24.0,720,721
+re2tt_ts-order-service_socket_1,RE2-TT,RE2,Train Ticket,socket,socket exhaustion,ts-order-service,1705986772,1705986052,1705987492,24.0,720,721
+re2tt_ts-route-service_cpu_1,RE2-TT,RE2,Train Ticket,cpu,CPU stress,ts-route-service,1705938117,1705937397,1705938837,24.0,720,721
+re2tt_ts-route-service_delay_1,RE2-TT,RE2,Train Ticket,delay,network delay,ts-route-service,1705939611,1705938891,1705940331,24.0,720,721
+re2tt_ts-route-service_loss_1,RE2-TT,RE2,Train Ticket,loss,network packet loss,ts-route-service,1705993539,1705992819,1705994259,24.0,720,721
+re2tt_ts-route-service_socket_1,RE2-TT,RE2,Train Ticket,socket,socket exhaustion,ts-route-service,1705992046,1705991326,1705992766,24.0,720,721
+re2tt_ts-train-service_cpu_1,RE2-TT,RE2,Train Ticket,cpu,CPU stress,ts-train-service,1705942599,1705941879,1705943319,24.0,720,721
+re2tt_ts-train-service_delay_1,RE2-TT,RE2,Train Ticket,delay,network delay,ts-train-service,1705944092,1705943372,1705944812,24.0,720,721
+re2tt_ts-train-service_loss_1,RE2-TT,RE2,Train Ticket,loss,network packet loss,ts-train-service,1708448623,1708447903,1708449343,24.0,720,721
+re2tt_ts-train-service_socket_1,RE2-TT,RE2,Train Ticket,socket,socket exhaustion,ts-train-service,1705997317,1705996597,1705998037,24.0,720,721
+re2tt_ts-travel-service_cpu_1,RE2-TT,RE2,Train Ticket,cpu,CPU stress,ts-travel-service,1708453056,1708452336,1708453776,24.0,720,721
+re2tt_ts-travel-service_delay_1,RE2-TT,RE2,Train Ticket,delay,network delay,ts-travel-service,1706013574,1706012854,1706014294,24.0,720,721
+re2tt_ts-travel-service_loss_1,RE2-TT,RE2,Train Ticket,loss,network packet loss,ts-travel-service,1708454598,1708453878,1708455318,24.0,720,721
+re2tt_ts-travel-service_socket_1,RE2-TT,RE2,Train Ticket,socket,socket exhaustion,ts-travel-service,1706146324,1706145604,1706147044,24.0,720,721
