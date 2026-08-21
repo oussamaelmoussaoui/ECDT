@@ -1,0 +1,1 @@
+"""ECDT - Enterprise Cognitive Digital Twin."""
