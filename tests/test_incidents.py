@@ -1,26 +1,74 @@
 from pathlib import Path
 
+import pytest
+
 from src.ingestion.dataset_loader import create_default_loader
 from src.ingestion.schema_normalizer import SchemaNormalizer
 from src.ingestion.anomaly_detector import AnomalyDetector
 
 
-loader = create_default_loader(Path("."))
-normalizer = SchemaNormalizer()
-detector = AnomalyDetector()
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
-cases = {
-    "cpu": "re2ob_checkoutservice_cpu_1",
-    "delay": "re2ob_checkoutservice_delay_1",
-    "loss": "re2ob_checkoutservice_loss_1",
-    "socket": "re2ob_checkoutservice_socket_1",
+
+CASES = {
+    "CPU": "re2ob_checkoutservice_cpu_1",
+    "DELAY": "re2ob_checkoutservice_delay_1",
+    "LOSS": "re2ob_checkoutservice_loss_1",
+    "SOCKET": "re2ob_checkoutservice_socket_1",
 }
 
-print("=" * 100)
-print("FINAL CHECK — RCAEval Incident Detection")
-print("=" * 100)
 
-for expected_fault, case in cases.items():
+EXPECTED = {
+    "CPU": {
+        "anomalies": 707,
+        "before": 0,
+        "after": 707,
+        "delay_seconds": 14.0,
+    },
+    "DELAY": {
+        "anomalies": 15,
+        "before": 0,
+        "after": 15,
+        "delay_seconds": 188.0,
+    },
+    "LOSS": {
+        "anomalies": 51,
+        "before": 0,
+        "after": 51,
+        "delay_seconds": 58.0,
+    },
+    "SOCKET": {
+        "anomalies": 236,
+        "before": 0,
+        "after": 236,
+        "delay_seconds": 7.0,
+    },
+}
+
+
+@pytest.fixture(scope="module")
+def loader():
+    return create_default_loader(PROJECT_ROOT)
+
+
+@pytest.fixture(scope="module")
+def normalizer():
+    return SchemaNormalizer()
+
+
+@pytest.fixture(scope="module")
+def detector():
+    return AnomalyDetector()
+
+
+def run_incident_test(
+    loader,
+    normalizer,
+    detector,
+    fault,
+):
+    case = CASES[fault]
+    expected = EXPECTED[fault]
 
     info = loader.get_case_info(case)
 
@@ -40,7 +88,6 @@ for expected_fault, case in cases.items():
 
     series = detector.build_series(events)
 
-    # On utilise la série CPU comme dans la validation précédente.
     ts = series[("checkoutservice", "cpu")]
 
     anomalies = detector.detect_series(
@@ -48,41 +95,134 @@ for expected_fault, case in cases.items():
         baseline_end=info.inject_time_ms,
     )
 
-    after = [
-        a for a in anomalies
-        if a.timestamp >= info.inject_time_ms
+    before = [
+        anomaly
+        for anomaly in anomalies
+        if anomaly.timestamp < info.inject_time_ms
     ]
 
-    incident_types = sorted(
-        {
-            a.incident_type.value
-            for a in after
-            if a.incident_type is not None
-        }
+    after = [
+        anomaly
+        for anomaly in anomalies
+        if anomaly.timestamp >= info.inject_time_ms
+    ]
+
+    assert len(anomalies) == expected["anomalies"]
+
+    assert len(before) == expected["before"]
+
+    assert len(after) == expected["after"]
+
+    assert after, (
+        f"No anomaly detected after injection "
+        f"for {fault}"
     )
 
-    print()
-    print(f"CASE              : {case}")
-    print(f"EXPECTED FAULT    : {expected_fault}")
-    print(f"ANOMALIES         : {len(after)}")
-    print(f"INCIDENT TYPES    : {incident_types}")
+    first_detection = min(
+        anomaly.timestamp
+        for anomaly in after
+    )
 
-    if after:
-        print(f"FIRST DETECTION   : {after[0].timestamp}")
-        print(
-            f"DETECTION DELAY   : "
-            f"{(after[0].timestamp - info.inject_time_ms) / 1000:.2f}s"
+    delay_seconds = (
+        first_detection - info.inject_time_ms
+    ) / 1000.0
+
+    assert delay_seconds == expected["delay_seconds"]
+
+    return {
+        "fault": fault,
+        "case": case,
+        "anomalies": len(anomalies),
+        "before": len(before),
+        "after": len(after),
+        "delay_seconds": delay_seconds,
+    }
+
+
+def test_cpu_incident(
+    loader,
+    normalizer,
+    detector,
+):
+    result = run_incident_test(
+        loader,
+        normalizer,
+        detector,
+        "CPU",
+    )
+
+    assert result["after"] > 0
+
+
+def test_delay_incident(
+    loader,
+    normalizer,
+    detector,
+):
+    result = run_incident_test(
+        loader,
+        normalizer,
+        detector,
+        "DELAY",
+    )
+
+    assert result["after"] > 0
+
+
+def test_loss_incident(
+    loader,
+    normalizer,
+    detector,
+):
+    result = run_incident_test(
+        loader,
+        normalizer,
+        detector,
+        "LOSS",
+    )
+
+    assert result["after"] > 0
+
+
+def test_socket_incident(
+    loader,
+    normalizer,
+    detector,
+):
+    result = run_incident_test(
+        loader,
+        normalizer,
+        detector,
+        "SOCKET",
+    )
+
+    assert result["after"] > 0
+
+
+def test_all_four_incidents(
+    loader,
+    normalizer,
+    detector,
+):
+    results = []
+
+    for fault in CASES:
+        result = run_incident_test(
+            loader,
+            normalizer,
+            detector,
+            fault,
         )
 
-    print("STATUS            : ", end="")
+        results.append(result)
 
-    if after and incident_types:
-        print("PASS")
-    else:
-        print("FAIL")
+    assert len(results) == 4
+
+    for result in results:
+        assert result["before"] == 0
+        assert result["after"] > 0
+        assert result["delay_seconds"] >= 0
 
 
-print()
-print("=" * 100)
-print("FINAL CHECK COMPLETED")
-print("=" * 100)
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])
