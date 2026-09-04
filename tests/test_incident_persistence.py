@@ -355,3 +355,71 @@ def test_parameter_serialization():
         parameters["confidence"],
         float,
     )
+def test_operational_queries_never_access_caused_by():
+    """Observer persistence must never read or write ground truth."""
+
+    client = MagicMock()
+    incident = make_incident()
+
+    persisted_row = {
+        "incident_id": incident.incident_id,
+        "case_id": incident.case_id,
+        "resource_id": incident.resource_id,
+    }
+
+    client.execute_write.return_value = [
+        persisted_row
+    ]
+
+    client.execute.side_effect = [
+        [
+            {
+                **persisted_row,
+                "affected_resource": (
+                    incident.resource_id
+                ),
+            }
+        ],
+        [
+            {
+                "count": 1,
+            }
+        ],
+    ]
+
+    persistence = IncidentPersistence(
+        client
+    )
+
+    persistence.create_incident(incident)
+    persistence.link_incident_to_resource(
+        incident
+    )
+    persistence.persist_incident(incident)
+    persistence.get_incident(
+        incident.incident_id
+    )
+    persistence.incident_affects_resource(
+        incident.incident_id,
+        incident.resource_id,
+    )
+
+    executed_queries = [
+        call.args[0]
+        for call in (
+            list(client.execute_write.call_args_list)
+            + list(client.execute.call_args_list)
+        )
+    ]
+
+    assert executed_queries
+
+    assert all(
+        "CAUSED_BY" not in query.upper()
+        for query in executed_queries
+    )
+
+    assert any(
+        "AFFECTS" in query.upper()
+        for query in executed_queries
+    )

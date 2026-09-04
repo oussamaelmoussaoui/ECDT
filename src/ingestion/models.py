@@ -13,6 +13,73 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, Dict, Optional
 
+FORBIDDEN_GROUND_TRUTH_FIELDS = frozenset(
+    {
+        "expected_root_cause",
+        "expected_service",
+        "fault",
+        "fault_description",
+        "ground_truth",
+        "inject_time",
+        "injected_service",
+        "injection_time",
+        "root_cause_service",
+        "time_end",
+        "time_start",
+    }
+)
+
+
+def find_ground_truth_fields(
+    value: Any,
+    path: str = "metadata",
+) -> list[str]:
+    """Return forbidden RCAEval-label paths found in nested metadata."""
+
+    found: list[str] = []
+
+    if isinstance(value, dict):
+        for key, nested_value in value.items():
+            field_path = f"{path}.{key}"
+
+            if str(key).lower() in FORBIDDEN_GROUND_TRUTH_FIELDS:
+                found.append(field_path)
+
+            found.extend(
+                find_ground_truth_fields(
+                    nested_value,
+                    field_path,
+                )
+            )
+
+        return found
+
+    if isinstance(value, (list, tuple, set, frozenset)):
+        for index, nested_value in enumerate(value):
+            found.extend(
+                find_ground_truth_fields(
+                    nested_value,
+                    f"{path}[{index}]",
+                )
+            )
+
+    return found
+
+
+def validate_operational_metadata(
+    metadata: Dict[str, Any],
+    *,
+    context: str,
+) -> None:
+    """Reject RCAEval ground truth at an operational boundary."""
+
+    leaked_paths = find_ground_truth_fields(metadata)
+
+    if leaked_paths:
+        raise ValueError(
+            f"{context} contains forbidden RCAEval ground truth: "
+            + ", ".join(leaked_paths)
+        )
 
 class EventType(str, Enum):
     """Type of telemetry signal."""
@@ -109,11 +176,8 @@ class NormalizedEvent:
     dataset:
         Dataset/suite identifier such as RE1-OB, RE2-OB or RE3-OB.
 
-    fault:
-        Original RCAEval fault label when available.
-
-    root_cause_service:
-        Ground-truth root-cause service when available.
+    RCAEval fault labels and root-cause labels are deliberately excluded.
+    They belong to the evaluation path, not to operational telemetry.
     """
 
     event_id: str
@@ -131,14 +195,12 @@ class NormalizedEvent:
     message: Optional[str] = None
     log_level: Optional[str] = None  # Added for explicit log severity filtering
 
-    trace_id: Optional[str] = None   # Added for explicit trace correlation
-    span_id: Optional[str] = None    # Added for explicit trace correlation
-    
+    trace_id: Optional[str] = None
+    span_id: Optional[str] = None
+
     attributes: Dict[str, Any] = field(default_factory=dict)
 
     dataset: Optional[str] = None
-    fault: Optional[str] = None
-    root_cause_service: Optional[str] = None
 
 
 @dataclass(slots=True)
@@ -176,20 +238,14 @@ class DetectionResult:
     """
     Result of validating anomaly detection against a labelled case.
     """
-
     case_id: str
     fault: str
     incident_type: Optional[IncidentType]
-
     detected: bool
 
     first_detection_timestamp: Optional[int] = None
     detection_delay_seconds: Optional[float] = None
-
     anomaly_count: int = 0
-
     detection_method: Optional[DetectionMethod] = None
-
     root_cause_service: Optional[str] = None
-
     metadata: Dict[str, Any] = field(default_factory=dict)

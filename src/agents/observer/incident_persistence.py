@@ -28,6 +28,7 @@ import json
 from typing import TYPE_CHECKING, Any
 
 from src.agents.observer.models import Incident
+from src.ingestion.models import validate_operational_metadata
 
 if TYPE_CHECKING:
     from src.knowledge_graph.neo4j_client import Neo4jClient
@@ -405,7 +406,10 @@ class IncidentPersistence:
         Neo4j properties cannot directly contain Python
         dictionaries/maps, so metadata is serialized as JSON.
         """
-
+        validate_operational_metadata(
+            incident.metadata,
+            context="Neo4j incident persistence",
+        )
         return {
             "incident_id": incident.incident_id,
 

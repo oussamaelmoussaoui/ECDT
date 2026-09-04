@@ -50,8 +50,6 @@ def test_loader_load_metrics(loader):
     expected_columns = {
         "case",
         "dataset",
-        "fault",
-        "root_cause_service",
         "time",
         "timestamp",
         "metric_name",
@@ -59,6 +57,10 @@ def test_loader_load_metrics(loader):
     }
 
     assert expected_columns.issubset(set(metrics.columns))
+    assert {
+        "fault",
+        "root_cause_service",
+    }.isdisjoint(metrics.columns)
 
     assert metrics["value"].dtype.is_float()
 
@@ -73,14 +75,16 @@ def test_loader_load_logs(loader):
     expected_columns = {
         "case",
         "dataset",
-        "fault",
-        "root_cause_service",
         "timestamp",
         "container_name",
         "message",
     }
 
     assert expected_columns.issubset(set(logs.columns))
+    assert {
+        "fault",
+        "root_cause_service",
+    }.isdisjoint(logs.columns)
 
 
 def test_loader_load_traces(loader):
@@ -93,8 +97,6 @@ def test_loader_load_traces(loader):
     expected_columns = {
         "case",
         "dataset",
-        "fault",
-        "root_cause_service",
         "traceID",
         "spanID",
         "serviceName",
@@ -103,6 +105,10 @@ def test_loader_load_traces(loader):
     }
 
     assert expected_columns.issubset(set(traces.columns))
+    assert {
+        "fault",
+        "root_cause_service",
+    }.isdisjoint(traces.columns)
 
 
 def test_loader_load_complete_case(loader):

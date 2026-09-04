@@ -53,8 +53,7 @@ def get_resource_history(
         metric_type,
         metric_name,
         case_id,
-        dataset,
-        fault
+        dataset
     FROM {METRIC_TABLE}
     WHERE resource_id = %s
     """
@@ -116,8 +115,7 @@ def get_metric_history(
         metric_type,
         metric_name,
         case_id,
-        dataset,
-        fault
+        dataset
     FROM {METRIC_TABLE}
     WHERE resource_id = %s
       AND metric_name = %s
@@ -166,8 +164,7 @@ def get_metric_type_history(
         metric_type,
         metric_name,
         case_id,
-        dataset,
-        fault
+        dataset
     FROM {METRIC_TABLE}
     WHERE resource_id = %s
       AND metric_type = %s
@@ -223,8 +220,7 @@ def get_metrics_around_timestamp(
         metric_type,
         metric_name,
         case_id,
-        dataset,
-        fault
+        dataset
     FROM {METRIC_TABLE}
     WHERE resource_id = %s
       AND timestamp BETWEEN
@@ -341,8 +337,7 @@ def get_case_metric_history(
         metric_type,
         metric_name,
         case_id,
-        dataset,
-        fault
+        dataset
     FROM {METRIC_TABLE}
     WHERE case_id = %s
     ORDER BY timestamp ASC;

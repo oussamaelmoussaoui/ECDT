@@ -136,7 +136,12 @@ def test_graph_statistics(neo4j_client):
 
     assert stats["services"] == EXPECTED_SERVICES
 
-    assert stats["incidents"] == EXPECTED_INCIDENTS
+    assert stats["ground_truth_incidents"] == EXPECTED_INCIDENTS
+
+    assert stats["incidents"] == (
+        stats["ground_truth_incidents"]
+        + stats["observer_incidents"]
+    )
 
     assert stats["dependencies"] == EXPECTED_DEPENDENCIES
 
@@ -488,18 +493,26 @@ def test_graph_overview(neo4j_client):
 
     assert "statistics" in overview
 
+    stats = overview["statistics"]
+
     assert (
-        overview["statistics"]["services"]
+        stats["services"]
         == EXPECTED_SERVICES
     )
 
+    # Exactly 60 RCAEval evaluation incidents.
     assert (
-        overview["statistics"]["incidents"]
+        stats["ground_truth_incidents"]
         == EXPECTED_INCIDENTS
     )
 
-    assert "Service" in overview["node_types"]
+    # The total includes both RCAEval and Observer incidents.
+    assert stats["incidents"] == (
+        stats["ground_truth_incidents"]
+        + stats["observer_incidents"]
+    )
 
+    assert "Service" in overview["node_types"]
     assert "Incident" in overview["node_types"]
 
     assert (
@@ -529,7 +542,7 @@ def test_every_incident_has_root_cause(
     result = neo4j_client.execute(
         """
         MATCH (i:Incident)
-
+        WHERE i.source = 'RCAEVAL_GROUND_TRUTH'
         OPTIONAL MATCH
             (i)-[r:CAUSED_BY]->(s:Service)
 

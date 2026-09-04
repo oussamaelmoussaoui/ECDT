@@ -106,6 +106,11 @@ INCIDENT_SIGNALS: Dict[IncidentType, set[str]] = {
     },
 }
 
+SIGNAL_TO_INCIDENT: Dict[str, IncidentType] = {
+    signal_type: incident_type
+    for incident_type, signal_types in INCIDENT_SIGNALS.items()
+    for signal_type in signal_types
+}
 
 # Signals that can be processed by the detector.
 #
@@ -207,20 +212,13 @@ class TimeSeries:
     """
 
     case_id: str
-
     service_name: str
-
     signal_type: str
 
     timestamps: List[float] = field(default_factory=list)
-
     values: List[float] = field(default_factory=list)
 
-    fault: Optional[str] = None
-
     incident_type: Optional[IncidentType] = None
-
-    root_cause_service: Optional[str] = None
 
     def __len__(self) -> int:
         """Return the number of observations."""
@@ -248,9 +246,7 @@ class TimeSeries:
                 self.values[i]
                 for i in order
             ],
-            fault=self.fault,
             incident_type=self.incident_type,
-            root_cause_service=self.root_cause_service,
         )
 
 
@@ -594,19 +590,6 @@ class AnomalyDetector:
 
                 series.signal_type = signal_type
 
-                series.fault = event.get("fault")
-
-                series.root_cause_service = event.get(
-                    "root_cause_service"
-                )
-
-                # Map fault to incident type if available
-                fault = event.get("fault")
-                if fault:
-                    series.incident_type = FAULT_TO_INCIDENT.get(
-                        fault
-                    )
-
             series.timestamps.append(
                 float(event.get("timestamp_ms", 0))
             )
@@ -860,9 +843,6 @@ class AnomalyDetector:
                     "baseline_samples": len(
                         baseline_values
                     ),
-                    "root_cause_service": (
-                        ts.root_cause_service
-                    ),
                 },
             )
 
@@ -921,10 +901,22 @@ class AnomalyDetector:
 
         for series in series_map.values():
 
+            resolved_incident_type = (
+                incident_type
+                or SIGNAL_TO_INCIDENT.get(
+                    series.signal_type
+                )
+            )
+
+            # Ignore signals that cannot currently be mapped
+            # to one of the three supported incident types.
+            if resolved_incident_type is None:
+                continue
+
             detected = self.detect_series(
                 series,
                 baseline_end=baseline_end,
-                incident_type=incident_type,
+                incident_type=resolved_incident_type,
             )
 
             all_anomalies.extend(

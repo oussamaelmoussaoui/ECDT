@@ -42,6 +42,7 @@ from .models import (
 from ...ingestion.models import (
     DetectionMethod,
     IncidentType,
+    validate_operational_metadata,
 )
 
 
@@ -220,7 +221,10 @@ def build_incident(
         - perform RCA,
         - determine root cause.
     """
-
+    validate_operational_metadata(
+        anomaly.metadata,
+        context="Incident Builder input",
+    )
     if not anomaly.resource_id:
         raise ValueError(
             "resource_id must not be empty."

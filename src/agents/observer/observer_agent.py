@@ -68,6 +68,7 @@ from src.agents.observer.timescale_consumer import (
 
 from src.ingestion.models import (
     AnomalyEvent,
+    validate_operational_metadata,
 )
 
 
@@ -373,6 +374,11 @@ class ObserverAgent:
             raise ValueError(
                 "Observer only accepts anomalies marked as anomalous."
             )
+
+        validate_operational_metadata(
+            anomaly.metadata,
+            context="Observer input",
+        )
 
         timestamp = ObserverAgent._timestamp_to_seconds(
             anomaly.timestamp

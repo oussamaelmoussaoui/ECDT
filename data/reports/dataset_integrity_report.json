@@ -1,0 +1,3121 @@
+{
+  "schema_version": "1.0",
+  "manifest": "data/manifest/rcaeval_subset_manifest.json",
+  "summary": {
+    "total_cases": 60,
+    "valid_cases": 60,
+    "invalid_cases": 0,
+    "error_counts": {},
+    "warning_counts": {
+      "logs_does_not_cover_injection": 1,
+      "logs_not_available_in_source": 1,
+      "traces_not_available_in_source": 20
+    }
+  },
+  "cases": [
+    {
+      "case_id": "re2ob_checkoutservice_cpu_1",
+      "dataset": "RE2-OB",
+      "fault": "cpu",
+      "root_cause_service": "checkoutservice",
+      "ground_truth": {
+        "time_start_ms": 1705353846000.0,
+        "inject_time_ms": 1705354566000.0,
+        "time_end_ms": 1705355286000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705353846000.0,
+          "time_end_ms": 1705355286000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 171322,
+          "row_count": 171322,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705353846000.0,
+          "time_end_ms": 1705355286000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 391997,
+          "row_count": 391997,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705353846065.0,
+          "time_end_ms": 1705355285970.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_checkoutservice_delay_1",
+      "dataset": "RE2-OB",
+      "fault": "delay",
+      "root_cause_service": "checkoutservice",
+      "ground_truth": {
+        "time_start_ms": 1705665791000.0,
+        "inject_time_ms": 1705666511000.0,
+        "time_end_ms": 1705667231000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705665791000.0,
+          "time_end_ms": 1705667231000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 177868,
+          "row_count": 177868,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705665791000.0,
+          "time_end_ms": 1705667231000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 405229,
+          "row_count": 405229,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705665791000.0,
+          "time_end_ms": 1705667231000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_checkoutservice_loss_1",
+      "dataset": "RE2-OB",
+      "fault": "loss",
+      "root_cause_service": "checkoutservice",
+      "ground_truth": {
+        "time_start_ms": 1705375546000.0,
+        "inject_time_ms": 1705376266000.0,
+        "time_end_ms": 1705376986000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705375546000.0,
+          "time_end_ms": 1705376986000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 168467,
+          "row_count": 168467,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705375546000.0,
+          "time_end_ms": 1705376986000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 385793,
+          "row_count": 385793,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705375546035.0,
+          "time_end_ms": 1705376985990.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_checkoutservice_socket_1",
+      "dataset": "RE2-OB",
+      "fault": "socket",
+      "root_cause_service": "checkoutservice",
+      "ground_truth": {
+        "time_start_ms": 1705655593000.0,
+        "inject_time_ms": 1705656313000.0,
+        "time_end_ms": 1705657033000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705655593000.0,
+          "time_end_ms": 1705657033000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 177376,
+          "row_count": 177376,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705655593000.0,
+          "time_end_ms": 1705657033000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 404289,
+          "row_count": 404289,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705655593000.0,
+          "time_end_ms": 1705657032820.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_currencyservice_cpu_1",
+      "dataset": "RE2-OB",
+      "fault": "cpu",
+      "root_cause_service": "currencyservice",
+      "ground_truth": {
+        "time_start_ms": 1705682097000.0,
+        "inject_time_ms": 1705682817000.0,
+        "time_end_ms": 1705683537000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705682097000.0,
+          "time_end_ms": 1705683537000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 175589,
+          "row_count": 175589,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705682097000.0,
+          "time_end_ms": 1705683537000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 401542,
+          "row_count": 401542,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705682097057.0,
+          "time_end_ms": 1705683536912.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_currencyservice_delay_1",
+      "dataset": "RE2-OB",
+      "fault": "delay",
+      "root_cause_service": "currencyservice",
+      "ground_truth": {
+        "time_start_ms": 1705701292000.0,
+        "inject_time_ms": 1705702012000.0,
+        "time_end_ms": 1705702732000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705701292000.0,
+          "time_end_ms": 1705702732000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 161224,
+          "row_count": 161224,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705701292000.0,
+          "time_end_ms": 1705702732000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 383583,
+          "row_count": 383583,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705701292034.0,
+          "time_end_ms": 1705702731966.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_currencyservice_loss_1",
+      "dataset": "RE2-OB",
+      "fault": "loss",
+      "root_cause_service": "currencyservice",
+      "ground_truth": {
+        "time_start_ms": 1705388221000.0,
+        "inject_time_ms": 1705388941000.0,
+        "time_end_ms": 1705389661000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705388221000.0,
+          "time_end_ms": 1705389661000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 131836,
+          "row_count": 131836,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705388221000.0,
+          "time_end_ms": 1705389661000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 286200,
+          "row_count": 286200,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705388221062.0,
+          "time_end_ms": 1705389660895.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_currencyservice_socket_1",
+      "dataset": "RE2-OB",
+      "fault": "socket",
+      "root_cause_service": "currencyservice",
+      "ground_truth": {
+        "time_start_ms": 1705478941000.0,
+        "inject_time_ms": 1705479661000.0,
+        "time_end_ms": 1705480381000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705478941000.0,
+          "time_end_ms": 1705480381000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 178239,
+          "row_count": 178239,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705478941000.0,
+          "time_end_ms": 1705480381000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 406431,
+          "row_count": 406431,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705478941018.0,
+          "time_end_ms": 1705480381000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_emailservice_cpu_1",
+      "dataset": "RE2-OB",
+      "fault": "cpu",
+      "root_cause_service": "emailservice",
+      "ground_truth": {
+        "time_start_ms": 1705349445000.0,
+        "inject_time_ms": 1705350165000.0,
+        "time_end_ms": 1705350885000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705349445000.0,
+          "time_end_ms": 1705350885000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 171212,
+          "row_count": 171212,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705349445000.0,
+          "time_end_ms": 1705350885000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 392420,
+          "row_count": 392420,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705349445111.0,
+          "time_end_ms": 1705350885000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_emailservice_delay_1",
+      "dataset": "RE2-OB",
+      "fault": "delay",
+      "root_cause_service": "emailservice",
+      "ground_truth": {
+        "time_start_ms": 1705732626000.0,
+        "inject_time_ms": 1705733346000.0,
+        "time_end_ms": 1705734066000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705732626000.0,
+          "time_end_ms": 1705734066000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 178258,
+          "row_count": 178258,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705732626000.0,
+          "time_end_ms": 1705734066000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 406121,
+          "row_count": 406121,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705732626000.0,
+          "time_end_ms": 1705734065923.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_emailservice_loss_1",
+      "dataset": "RE2-OB",
+      "fault": "loss",
+      "root_cause_service": "emailservice",
+      "ground_truth": {
+        "time_start_ms": 1705350912000.0,
+        "inject_time_ms": 1705351632000.0,
+        "time_end_ms": 1705352352000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705350912000.0,
+          "time_end_ms": 1705352352000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 169916,
+          "row_count": 169916,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705350912000.0,
+          "time_end_ms": 1705352352000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 386467,
+          "row_count": 386467,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705350912191.0,
+          "time_end_ms": 1705352351993.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_emailservice_socket_1",
+      "dataset": "RE2-OB",
+      "fault": "socket",
+      "root_cause_service": "emailservice",
+      "ground_truth": {
+        "time_start_ms": 1705725540000.0,
+        "inject_time_ms": 1705726260000.0,
+        "time_end_ms": 1705726980000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705725540000.0,
+          "time_end_ms": 1705726980000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 179307,
+          "row_count": 179307,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705725540000.0,
+          "time_end_ms": 1705726980000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 408640,
+          "row_count": 408640,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705725540002.0,
+          "time_end_ms": 1705726980000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_productcatalogservice_cpu_1",
+      "dataset": "RE2-OB",
+      "fault": "cpu",
+      "root_cause_service": "productcatalogservice",
+      "ground_truth": {
+        "time_start_ms": 1705339822000.0,
+        "inject_time_ms": 1705340542000.0,
+        "time_end_ms": 1705341262000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705339822000.0,
+          "time_end_ms": 1705341262000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 172220,
+          "row_count": 172220,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705339822000.0,
+          "time_end_ms": 1705341262000.0,
+          "covers_injection": true,
+          "root_cause_service_present": false,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 393266,
+          "row_count": 393266,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705339822000.0,
+          "time_end_ms": 1705341262000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_productcatalogservice_delay_1",
+      "dataset": "RE2-OB",
+      "fault": "delay",
+      "root_cause_service": "productcatalogservice",
+      "ground_truth": {
+        "time_start_ms": 1705393858000.0,
+        "inject_time_ms": 1705394578000.0,
+        "time_end_ms": 1705395298000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705393858000.0,
+          "time_end_ms": 1705395298000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 160317,
+          "row_count": 160317,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705393858000.0,
+          "time_end_ms": 1705395298000.0,
+          "covers_injection": true,
+          "root_cause_service_present": false,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 365023,
+          "row_count": 365023,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705393858000.0,
+          "time_end_ms": 1705395298000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_productcatalogservice_loss_1",
+      "dataset": "RE2-OB",
+      "fault": "loss",
+      "root_cause_service": "productcatalogservice",
+      "ground_truth": {
+        "time_start_ms": 1705342110000.0,
+        "inject_time_ms": 1705342830000.0,
+        "time_end_ms": 1705343550000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705342110000.0,
+          "time_end_ms": 1705343550000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 117601,
+          "row_count": 117601,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705342110000.0,
+          "time_end_ms": 1705343548000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 254889,
+          "row_count": 254889,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705342110001.0,
+          "time_end_ms": 1705343549558.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_productcatalogservice_socket_1",
+      "dataset": "RE2-OB",
+      "fault": "socket",
+      "root_cause_service": "productcatalogservice",
+      "ground_truth": {
+        "time_start_ms": 1705391513000.0,
+        "inject_time_ms": 1705392233000.0,
+        "time_end_ms": 1705392953000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705391513000.0,
+          "time_end_ms": 1705392953000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 168357,
+          "row_count": 168357,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705391513000.0,
+          "time_end_ms": 1705392953000.0,
+          "covers_injection": true,
+          "root_cause_service_present": false,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 383626,
+          "row_count": 383626,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705391513125.0,
+          "time_end_ms": 1705392952988.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_recommendationservice_cpu_1",
+      "dataset": "RE2-OB",
+      "fault": "cpu",
+      "root_cause_service": "recommendationservice",
+      "ground_truth": {
+        "time_start_ms": 1705345045000.0,
+        "inject_time_ms": 1705345765000.0,
+        "time_end_ms": 1705346485000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705345045000.0,
+          "time_end_ms": 1705346485000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 171429,
+          "row_count": 171429,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705345045000.0,
+          "time_end_ms": 1705346485000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 391057,
+          "row_count": 391057,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705345045000.0,
+          "time_end_ms": 1705346485000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_recommendationservice_delay_1",
+      "dataset": "RE2-OB",
+      "fault": "delay",
+      "root_cause_service": "recommendationservice",
+      "ground_truth": {
+        "time_start_ms": 1705399657000.0,
+        "inject_time_ms": 1705400377000.0,
+        "time_end_ms": 1705401097000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705399657000.0,
+          "time_end_ms": 1705401097000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 172404,
+          "row_count": 172404,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705399657000.0,
+          "time_end_ms": 1705401097000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 393688,
+          "row_count": 393688,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705399657133.0,
+          "time_end_ms": 1705401097000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_recommendationservice_loss_1",
+      "dataset": "RE2-OB",
+      "fault": "loss",
+      "root_cause_service": "recommendationservice",
+      "ground_truth": {
+        "time_start_ms": 1705346511000.0,
+        "inject_time_ms": 1705347231000.0,
+        "time_end_ms": 1705347951000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705346511000.0,
+          "time_end_ms": 1705347951000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 147413,
+          "row_count": 147413,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705346511000.0,
+          "time_end_ms": 1705347951000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 299508,
+          "row_count": 299508,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705346511000.0,
+          "time_end_ms": 1705347950992.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ob_recommendationservice_socket_1",
+      "dataset": "RE2-OB",
+      "fault": "socket",
+      "root_cause_service": "recommendationservice",
+      "ground_truth": {
+        "time_start_ms": 1705397522000.0,
+        "inject_time_ms": 1705398242000.0,
+        "time_end_ms": 1705398962000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705397522000.0,
+          "time_end_ms": 1705398962000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 131908,
+          "row_count": 131908,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705397522000.0,
+          "time_end_ms": 1705398962000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 303835,
+          "row_count": 303835,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705397522237.0,
+          "time_end_ms": 1705398961872.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2ss_carts_cpu_1",
+      "dataset": "RE2-SS",
+      "fault": "cpu",
+      "root_cause_service": "carts",
+      "ground_truth": {
+        "time_start_ms": 1705595459000.0,
+        "inject_time_ms": 1705596179000.0,
+        "time_end_ms": 1705596899000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705595459000.0,
+          "time_end_ms": 1705596899000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 86592,
+          "row_count": 86592,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705595459000.0,
+          "time_end_ms": 1705596899000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_carts_delay_1",
+      "dataset": "RE2-SS",
+      "fault": "delay",
+      "root_cause_service": "carts",
+      "ground_truth": {
+        "time_start_ms": 1705661904000.0,
+        "inject_time_ms": 1705662624000.0,
+        "time_end_ms": 1705663344000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705661904000.0,
+          "time_end_ms": 1705663344000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 83040,
+          "row_count": 83040,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705661904000.0,
+          "time_end_ms": 1705663344000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_carts_loss_1",
+      "dataset": "RE2-SS",
+      "fault": "loss",
+      "root_cause_service": "carts",
+      "ground_truth": {
+        "time_start_ms": 1705663489000.0,
+        "inject_time_ms": 1705664209000.0,
+        "time_end_ms": 1705664929000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705663489000.0,
+          "time_end_ms": 1705664929000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 84486,
+          "row_count": 84486,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705663489000.0,
+          "time_end_ms": 1705664929000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_carts_socket_1",
+      "dataset": "RE2-SS",
+      "fault": "socket",
+      "root_cause_service": "carts",
+      "ground_truth": {
+        "time_start_ms": 1705632217000.0,
+        "inject_time_ms": 1705632937000.0,
+        "time_end_ms": 1705633657000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705632217000.0,
+          "time_end_ms": 1705633657000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 88689,
+          "row_count": 88689,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705632217000.0,
+          "time_end_ms": 1705633657000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_catalogue_cpu_1",
+      "dataset": "RE2-SS",
+      "fault": "cpu",
+      "root_cause_service": "catalogue",
+      "ground_truth": {
+        "time_start_ms": 1705600031000.0,
+        "inject_time_ms": 1705600751000.0,
+        "time_end_ms": 1705601471000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705600031000.0,
+          "time_end_ms": 1705601471000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 78035,
+          "row_count": 78035,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705600032000.0,
+          "time_end_ms": 1705601471000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_catalogue_delay_1",
+      "dataset": "RE2-SS",
+      "fault": "delay",
+      "root_cause_service": "catalogue",
+      "ground_truth": {
+        "time_start_ms": 1705639414000.0,
+        "inject_time_ms": 1705640134000.0,
+        "time_end_ms": 1705640854000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705639414000.0,
+          "time_end_ms": 1705640854000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 88601,
+          "row_count": 88601,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705639414000.0,
+          "time_end_ms": 1705640854000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_catalogue_loss_1",
+      "dataset": "RE2-SS",
+      "fault": "loss",
+      "root_cause_service": "catalogue",
+      "ground_truth": {
+        "time_start_ms": 1705601592000.0,
+        "inject_time_ms": 1705602312000.0,
+        "time_end_ms": 1705603032000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705601592000.0,
+          "time_end_ms": 1705603032000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 57320,
+          "row_count": 57320,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705601592000.0,
+          "time_end_ms": 1705603032000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_catalogue_socket_1",
+      "dataset": "RE2-SS",
+      "fault": "socket",
+      "root_cause_service": "catalogue",
+      "ground_truth": {
+        "time_start_ms": 1705637815000.0,
+        "inject_time_ms": 1705638535000.0,
+        "time_end_ms": 1705639255000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705637815000.0,
+          "time_end_ms": 1705639255000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 89439,
+          "row_count": 89439,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705637815000.0,
+          "time_end_ms": 1705639255000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_orders_cpu_1",
+      "dataset": "RE2-SS",
+      "fault": "cpu",
+      "root_cause_service": "orders",
+      "ground_truth": {
+        "time_start_ms": 1705604711000.0,
+        "inject_time_ms": 1705605431000.0,
+        "time_end_ms": 1705606151000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705604711000.0,
+          "time_end_ms": 1705606151000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 86534,
+          "row_count": 86534,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705604711000.0,
+          "time_end_ms": 1705606151000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_orders_delay_1",
+      "dataset": "RE2-SS",
+      "fault": "delay",
+      "root_cause_service": "orders",
+      "ground_truth": {
+        "time_start_ms": 1705644272000.0,
+        "inject_time_ms": 1705644992000.0,
+        "time_end_ms": 1705645712000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705644272000.0,
+          "time_end_ms": 1705645712000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 88610,
+          "row_count": 88610,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705644272000.0,
+          "time_end_ms": 1705645712000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_orders_loss_1",
+      "dataset": "RE2-SS",
+      "fault": "loss",
+      "root_cause_service": "orders",
+      "ground_truth": {
+        "time_start_ms": 1705606290000.0,
+        "inject_time_ms": 1705607010000.0,
+        "time_end_ms": 1705607730000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705606290000.0,
+          "time_end_ms": 1705607730000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 89230,
+          "row_count": 89230,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705606290000.0,
+          "time_end_ms": 1705607730000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_orders_socket_1",
+      "dataset": "RE2-SS",
+      "fault": "socket",
+      "root_cause_service": "orders",
+      "ground_truth": {
+        "time_start_ms": 1705642672000.0,
+        "inject_time_ms": 1705643392000.0,
+        "time_end_ms": 1705644112000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705642672000.0,
+          "time_end_ms": 1705644112000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 89905,
+          "row_count": 89905,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705642672000.0,
+          "time_end_ms": 1705644112000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_payment_cpu_1",
+      "dataset": "RE2-SS",
+      "fault": "cpu",
+      "root_cause_service": "payment",
+      "ground_truth": {
+        "time_start_ms": 1705609456000.0,
+        "inject_time_ms": 1705610176000.0,
+        "time_end_ms": 1705610896000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705609456000.0,
+          "time_end_ms": 1705610896000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 86881,
+          "row_count": 86881,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705609456000.0,
+          "time_end_ms": 1705610895000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_payment_delay_1",
+      "dataset": "RE2-SS",
+      "fault": "delay",
+      "root_cause_service": "payment",
+      "ground_truth": {
+        "time_start_ms": 1705649905000.0,
+        "inject_time_ms": 1705650625000.0,
+        "time_end_ms": 1705651345000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705649905000.0,
+          "time_end_ms": 1705651345000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 86312,
+          "row_count": 86312,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705649905000.0,
+          "time_end_ms": 1705651345000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_payment_loss_1",
+      "dataset": "RE2-SS",
+      "fault": "loss",
+      "root_cause_service": "payment",
+      "ground_truth": {
+        "time_start_ms": 1705611034000.0,
+        "inject_time_ms": 1705611754000.0,
+        "time_end_ms": 1705612474000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705611034000.0,
+          "time_end_ms": 1705612474000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 92962,
+          "row_count": 92962,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705611034000.0,
+          "time_end_ms": 1705612474000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_payment_socket_1",
+      "dataset": "RE2-SS",
+      "fault": "socket",
+      "root_cause_service": "payment",
+      "ground_truth": {
+        "time_start_ms": 1705648300000.0,
+        "inject_time_ms": 1705649020000.0,
+        "time_end_ms": 1705649740000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705648300000.0,
+          "time_end_ms": 1705649740000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 85811,
+          "row_count": 85811,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705648300000.0,
+          "time_end_ms": 1705649740000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_user_cpu_1",
+      "dataset": "RE2-SS",
+      "fault": "cpu",
+      "root_cause_service": "user",
+      "ground_truth": {
+        "time_start_ms": 1705614169000.0,
+        "inject_time_ms": 1705614889000.0,
+        "time_end_ms": 1705615609000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705614169000.0,
+          "time_end_ms": 1705615609000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 77384,
+          "row_count": 77384,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705614169000.0,
+          "time_end_ms": 1705615609000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_user_delay_1",
+      "dataset": "RE2-SS",
+      "fault": "delay",
+      "root_cause_service": "user",
+      "ground_truth": {
+        "time_start_ms": 1705655514000.0,
+        "inject_time_ms": 1705656234000.0,
+        "time_end_ms": 1705656954000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705655514000.0,
+          "time_end_ms": 1705656954000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 81553,
+          "row_count": 81553,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705655514000.0,
+          "time_end_ms": 1705656954000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_user_loss_1",
+      "dataset": "RE2-SS",
+      "fault": "loss",
+      "root_cause_service": "user",
+      "ground_truth": {
+        "time_start_ms": 1705615740000.0,
+        "inject_time_ms": 1705616460000.0,
+        "time_end_ms": 1705617180000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705615740000.0,
+          "time_end_ms": 1705617180000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 53507,
+          "row_count": 53507,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705615740000.0,
+          "time_end_ms": 1705617179000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2ss_user_socket_1",
+      "dataset": "RE2-SS",
+      "fault": "socket",
+      "root_cause_service": "user",
+      "ground_truth": {
+        "time_start_ms": 1705653916000.0,
+        "inject_time_ms": 1705654636000.0,
+        "time_end_ms": 1705655356000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705653916000.0,
+          "time_end_ms": 1705655356000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 84250,
+          "row_count": 84250,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705653916000.0,
+          "time_end_ms": 1705655356000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "traces_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2tt_ts-auth-service_cpu_1",
+      "dataset": "RE2-TT",
+      "fault": "cpu",
+      "root_cause_service": "ts-auth-service",
+      "ground_truth": {
+        "time_start_ms": 1705917385000.0,
+        "inject_time_ms": 1705918105000.0,
+        "time_end_ms": 1705918825000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705917385000.0,
+          "time_end_ms": 1705918825000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": false,
+          "source_row_count": 0,
+          "row_count": 0,
+          "timestamp_unit": "seconds",
+          "time_start_ms": null,
+          "time_end_ms": null,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "not_available_in_source"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1143435,
+          "row_count": 1143435,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705917385000.0,
+          "time_end_ms": 1705918825000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "logs_not_available_in_source"
+      ]
+    },
+    {
+      "case_id": "re2tt_ts-auth-service_delay_1",
+      "dataset": "RE2-TT",
+      "fault": "delay",
+      "root_cause_service": "ts-auth-service",
+      "ground_truth": {
+        "time_start_ms": 1705921145000.0,
+        "inject_time_ms": 1705921865000.0,
+        "time_end_ms": 1705922585000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705921145000.0,
+          "time_end_ms": 1705922585000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 266174,
+          "row_count": 266174,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705921145000.0,
+          "time_end_ms": 1705922585000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1153677,
+          "row_count": 1153677,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705921145002.0,
+          "time_end_ms": 1705922584999.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-auth-service_loss_1",
+      "dataset": "RE2-TT",
+      "fault": "loss",
+      "root_cause_service": "ts-auth-service",
+      "ground_truth": {
+        "time_start_ms": 1705982283000.0,
+        "inject_time_ms": 1705983003000.0,
+        "time_end_ms": 1705983723000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705982283000.0,
+          "time_end_ms": 1705983723000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 276063,
+          "row_count": 276063,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705982284000.0,
+          "time_end_ms": 1705983723000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 961039,
+          "row_count": 961039,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705982283511.0,
+          "time_end_ms": 1705983722999.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-auth-service_socket_1",
+      "dataset": "RE2-TT",
+      "fault": "socket",
+      "root_cause_service": "ts-auth-service",
+      "ground_truth": {
+        "time_start_ms": 1705980788000.0,
+        "inject_time_ms": 1705981508000.0,
+        "time_end_ms": 1705982228000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705980788000.0,
+          "time_end_ms": 1705982228000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 270617,
+          "row_count": 270617,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705980788000.0,
+          "time_end_ms": 1705982228000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 829373,
+          "row_count": 829373,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705980788049.0,
+          "time_end_ms": 1705982227998.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-order-service_cpu_1",
+      "dataset": "RE2-TT",
+      "fault": "cpu",
+      "root_cause_service": "ts-order-service",
+      "ground_truth": {
+        "time_start_ms": 1705934405000.0,
+        "inject_time_ms": 1705935125000.0,
+        "time_end_ms": 1705935845000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705934405000.0,
+          "time_end_ms": 1705935845000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 269233,
+          "row_count": 269233,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705934405000.0,
+          "time_end_ms": 1705935845000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 628113,
+          "row_count": 628113,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705934405002.0,
+          "time_end_ms": 1705935844898.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-order-service_delay_1",
+      "dataset": "RE2-TT",
+      "fault": "delay",
+      "root_cause_service": "ts-order-service",
+      "ground_truth": {
+        "time_start_ms": 1705951525000.0,
+        "inject_time_ms": 1705952245000.0,
+        "time_end_ms": 1705952965000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705951525000.0,
+          "time_end_ms": 1705952965000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 146141,
+          "row_count": 146141,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705951525000.0,
+          "time_end_ms": 1705952674000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 779417,
+          "row_count": 779417,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705951525002.0,
+          "time_end_ms": 1705952675066.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-order-service_loss_1",
+      "dataset": "RE2-TT",
+      "fault": "loss",
+      "root_cause_service": "ts-order-service",
+      "ground_truth": {
+        "time_start_ms": 1705987546000.0,
+        "inject_time_ms": 1705988266000.0,
+        "time_end_ms": 1705988986000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705987546000.0,
+          "time_end_ms": 1705988986000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 270219,
+          "row_count": 270219,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705987546000.0,
+          "time_end_ms": 1705988986000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1293243,
+          "row_count": 1293243,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705987546000.0,
+          "time_end_ms": 1705988986000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-order-service_socket_1",
+      "dataset": "RE2-TT",
+      "fault": "socket",
+      "root_cause_service": "ts-order-service",
+      "ground_truth": {
+        "time_start_ms": 1705986052000.0,
+        "inject_time_ms": 1705986772000.0,
+        "time_end_ms": 1705987492000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705986052000.0,
+          "time_end_ms": 1705987492000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 269123,
+          "row_count": 269123,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705986052000.0,
+          "time_end_ms": 1705987492000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1204370,
+          "row_count": 1204370,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705986052312.0,
+          "time_end_ms": 1705987491952.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-route-service_cpu_1",
+      "dataset": "RE2-TT",
+      "fault": "cpu",
+      "root_cause_service": "ts-route-service",
+      "ground_truth": {
+        "time_start_ms": 1705937397000.0,
+        "inject_time_ms": 1705938117000.0,
+        "time_end_ms": 1705938837000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705937397000.0,
+          "time_end_ms": 1705938837000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 257658,
+          "row_count": 257658,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705937397000.0,
+          "time_end_ms": 1705938837000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 758384,
+          "row_count": 758384,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705937397000.0,
+          "time_end_ms": 1705938836713.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-route-service_delay_1",
+      "dataset": "RE2-TT",
+      "fault": "delay",
+      "root_cause_service": "ts-route-service",
+      "ground_truth": {
+        "time_start_ms": 1705938891000.0,
+        "inject_time_ms": 1705939611000.0,
+        "time_end_ms": 1705940331000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705938891000.0,
+          "time_end_ms": 1705940331000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 238158,
+          "row_count": 238158,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705938891000.0,
+          "time_end_ms": 1705940331000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 783245,
+          "row_count": 783245,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705938891069.0,
+          "time_end_ms": 1705940331000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-route-service_loss_1",
+      "dataset": "RE2-TT",
+      "fault": "loss",
+      "root_cause_service": "ts-route-service",
+      "ground_truth": {
+        "time_start_ms": 1705992819000.0,
+        "inject_time_ms": 1705993539000.0,
+        "time_end_ms": 1705994259000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705992819000.0,
+          "time_end_ms": 1705994259000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 197087,
+          "row_count": 197087,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705992819000.0,
+          "time_end_ms": 1705994259000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1198291,
+          "row_count": 1198291,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705992819003.0,
+          "time_end_ms": 1705994258999.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-route-service_socket_1",
+      "dataset": "RE2-TT",
+      "fault": "socket",
+      "root_cause_service": "ts-route-service",
+      "ground_truth": {
+        "time_start_ms": 1705991326000.0,
+        "inject_time_ms": 1705992046000.0,
+        "time_end_ms": 1705992766000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705991326000.0,
+          "time_end_ms": 1705992766000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 256485,
+          "row_count": 256485,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705991326000.0,
+          "time_end_ms": 1705992766000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1535674,
+          "row_count": 1535674,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705991326003.0,
+          "time_end_ms": 1705992766000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-train-service_cpu_1",
+      "dataset": "RE2-TT",
+      "fault": "cpu",
+      "root_cause_service": "ts-train-service",
+      "ground_truth": {
+        "time_start_ms": 1705941879000.0,
+        "inject_time_ms": 1705942599000.0,
+        "time_end_ms": 1705943319000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705941879000.0,
+          "time_end_ms": 1705943319000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 272238,
+          "row_count": 272238,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705941879000.0,
+          "time_end_ms": 1705943319000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1053578,
+          "row_count": 1053578,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705941879246.0,
+          "time_end_ms": 1705943318803.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-train-service_delay_1",
+      "dataset": "RE2-TT",
+      "fault": "delay",
+      "root_cause_service": "ts-train-service",
+      "ground_truth": {
+        "time_start_ms": 1705943372000.0,
+        "inject_time_ms": 1705944092000.0,
+        "time_end_ms": 1705944812000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705943372000.0,
+          "time_end_ms": 1705944812000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 239017,
+          "row_count": 239017,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705943372000.0,
+          "time_end_ms": 1705944812000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1000430,
+          "row_count": 1000430,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705943372002.0,
+          "time_end_ms": 1705944811997.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-train-service_loss_1",
+      "dataset": "RE2-TT",
+      "fault": "loss",
+      "root_cause_service": "ts-train-service",
+      "ground_truth": {
+        "time_start_ms": 1708447903000.0,
+        "inject_time_ms": 1708448623000.0,
+        "time_end_ms": 1708449343000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1708447903000.0,
+          "time_end_ms": 1708449343000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 314211,
+          "row_count": 314211,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1708447903000.0,
+          "time_end_ms": 1708449343000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1025176,
+          "row_count": 1025176,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1708447903003.0,
+          "time_end_ms": 1708449342999.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-train-service_socket_1",
+      "dataset": "RE2-TT",
+      "fault": "socket",
+      "root_cause_service": "ts-train-service",
+      "ground_truth": {
+        "time_start_ms": 1705996597000.0,
+        "inject_time_ms": 1705997317000.0,
+        "time_end_ms": 1705998037000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705996597000.0,
+          "time_end_ms": 1705998037000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 107304,
+          "row_count": 107304,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1705997440000.0,
+          "time_end_ms": 1705998037000.0,
+          "covers_injection": false,
+          "root_cause_service_present": false,
+          "status": "available_but_does_not_cover_injection"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 382423,
+          "row_count": 382423,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1705996599877.0,
+          "time_end_ms": 1705998036284.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "logs_does_not_cover_injection"
+      ]
+    },
+    {
+      "case_id": "re2tt_ts-travel-service_cpu_1",
+      "dataset": "RE2-TT",
+      "fault": "cpu",
+      "root_cause_service": "ts-travel-service",
+      "ground_truth": {
+        "time_start_ms": 1708452336000.0,
+        "inject_time_ms": 1708453056000.0,
+        "time_end_ms": 1708453776000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1708452336000.0,
+          "time_end_ms": 1708453776000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 302701,
+          "row_count": 302701,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1708452336000.0,
+          "time_end_ms": 1708453776000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 730224,
+          "row_count": 730224,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1708452336105.0,
+          "time_end_ms": 1708453775512.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-travel-service_delay_1",
+      "dataset": "RE2-TT",
+      "fault": "delay",
+      "root_cause_service": "ts-travel-service",
+      "ground_truth": {
+        "time_start_ms": 1706012854000.0,
+        "inject_time_ms": 1706013574000.0,
+        "time_end_ms": 1706014294000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1706012854000.0,
+          "time_end_ms": 1706014294000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 245246,
+          "row_count": 245246,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1706012854000.0,
+          "time_end_ms": 1706014294000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 929570,
+          "row_count": 929570,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1706012854069.0,
+          "time_end_ms": 1706014293988.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-travel-service_loss_1",
+      "dataset": "RE2-TT",
+      "fault": "loss",
+      "root_cause_service": "ts-travel-service",
+      "ground_truth": {
+        "time_start_ms": 1708453878000.0,
+        "inject_time_ms": 1708454598000.0,
+        "time_end_ms": 1708455318000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1708453878000.0,
+          "time_end_ms": 1708455318000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 309984,
+          "row_count": 309984,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1708453878000.0,
+          "time_end_ms": 1708455318000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 877130,
+          "row_count": 877130,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1708453878011.0,
+          "time_end_ms": 1708455317996.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "case_id": "re2tt_ts-travel-service_socket_1",
+      "dataset": "RE2-TT",
+      "fault": "socket",
+      "root_cause_service": "ts-travel-service",
+      "ground_truth": {
+        "time_start_ms": 1706145604000.0,
+        "inject_time_ms": 1706146324000.0,
+        "time_end_ms": 1706147044000.0,
+        "window_valid": true
+      },
+      "modalities": {
+        "metrics": {
+          "available_in_source": true,
+          "source_row_count": 1441,
+          "row_count": 1441,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1706145604000.0,
+          "time_end_ms": 1706147044000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 59169,
+          "row_count": 59169,
+          "timestamp_unit": "seconds",
+          "time_start_ms": 1706145604000.0,
+          "time_end_ms": 1706147043000.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 163434,
+          "row_count": 163434,
+          "timestamp_unit": "milliseconds",
+          "time_start_ms": 1706145604038.0,
+          "time_end_ms": 1706147043039.0,
+          "covers_injection": true,
+          "root_cause_service_present": true,
+          "status": "available"
+        }
+      },
+      "root_cause_service_present": true,
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    }
+  ]
+}

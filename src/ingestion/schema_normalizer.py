@@ -100,8 +100,6 @@ class NormalizedEvent:
     # ------------------------------------------------------------------
 
     dataset: Optional[str] = None
-    fault: Optional[str] = None
-    root_cause_service: Optional[str] = None
 
     # ------------------------------------------------------------------
     # Source
@@ -199,8 +197,6 @@ class SchemaNormalizer:
     REQUIRED_METRIC_COLUMNS = {
         "case",
         "dataset",
-        "fault",
-        "root_cause_service",
         "timestamp",
         "metric_name",
         "value",
@@ -209,8 +205,6 @@ class SchemaNormalizer:
     REQUIRED_LOG_COLUMNS = {
         "case",
         "dataset",
-        "fault",
-        "root_cause_service",
         "timestamp_ms",
         "container_name",
         "message",
@@ -219,8 +213,6 @@ class SchemaNormalizer:
     REQUIRED_TRACE_COLUMNS = {
         "case",
         "dataset",
-        "fault",
-        "root_cause_service",
         "timestamp_ms",
         "traceID",
         "spanID",
@@ -271,8 +263,6 @@ class SchemaNormalizer:
 
             case
             dataset
-            fault
-            root_cause_service
             timestamp
             metric_name
             value
@@ -304,12 +294,6 @@ class SchemaNormalizer:
                     .alias("timestamp_ms"),
 
                     pl.col("dataset")
-                    .cast(pl.Utf8),
-
-                    pl.col("fault")
-                    .cast(pl.Utf8),
-
-                    pl.col("root_cause_service")
                     .cast(pl.Utf8),
 
                     pl.col("metric_name")
@@ -349,8 +333,6 @@ class SchemaNormalizer:
                     "case_id",
                     "timestamp_ms",
                     "dataset",
-                    "fault",
-                    "root_cause_service",
                     pl.lit("metric").alias("source"),
                     "service_name",
                     "signal_type",
@@ -405,12 +387,6 @@ class SchemaNormalizer:
                     pl.col("dataset")
                     .cast(pl.Utf8),
 
-                    pl.col("fault")
-                    .cast(pl.Utf8),
-
-                    pl.col("root_cause_service")
-                    .cast(pl.Utf8),
-
                     pl.col("container_name")
                     .cast(pl.Utf8)
                     .alias("service_name"),
@@ -445,8 +421,6 @@ class SchemaNormalizer:
                     "case_id",
                     "timestamp_ms",
                     "dataset",
-                    "fault",
-                    "root_cause_service",
                     pl.lit("log").alias("source"),
                     "service_name",
                     pl.lit(None, dtype=pl.Utf8).alias(
@@ -521,12 +495,6 @@ class SchemaNormalizer:
                     pl.col("dataset")
                     .cast(pl.Utf8),
 
-                    pl.col("fault")
-                    .cast(pl.Utf8),
-
-                    pl.col("root_cause_service")
-                    .cast(pl.Utf8),
-
                     pl.col("serviceName")
                     .cast(pl.Utf8)
                     .alias("service_name"),
@@ -586,8 +554,6 @@ class SchemaNormalizer:
                     "case_id",
                     "timestamp_ms",
                     "dataset",
-                    "fault",
-                    "root_cause_service",
                     pl.lit("trace").alias("source"),
                     "service_name",
                     pl.lit(None, dtype=pl.Utf8).alias(
@@ -712,12 +678,6 @@ class SchemaNormalizer:
 
                     dataset=self._nullable_string(
                         row["dataset"]
-                    ),
-                    fault=self._nullable_string(
-                        row["fault"]
-                    ),
-                    root_cause_service=self._nullable_string(
-                        row["root_cause_service"]
                     ),
 
                     source=str(row["source"]),
@@ -954,8 +914,6 @@ class SchemaNormalizer:
             "case_id",
             "timestamp_ms",
             "dataset",
-            "fault",
-            "root_cause_service",
             "source",
             "service_name",
             "signal_type",
@@ -1036,16 +994,6 @@ class SchemaNormalizer:
                 ),
                 "dataset": pl.Series(
                     "dataset",
-                    [],
-                    dtype=pl.Utf8,
-                ),
-                "fault": pl.Series(
-                    "fault",
-                    [],
-                    dtype=pl.Utf8,
-                ),
-                "root_cause_service": pl.Series(
-                    "root_cause_service",
                     [],
                     dtype=pl.Utf8,
                 ),

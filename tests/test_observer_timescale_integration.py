@@ -119,12 +119,14 @@ def test_real_anomaly_observation_exists(
         FROM metric_observations
         WHERE case_id = %s
           AND resource_id = %s
-          AND metric_name = %s;
+          AND metric_name = %s
+          AND timestamp = to_timestamp(%s)
         """,
         (
             CASE_ID,
             RESOURCE_ID,
             METRIC_NAME,
+            ANOMALY_TIMESTAMP,
         ),
         fetch=True,
     )
@@ -324,3 +326,23 @@ def test_observer_builds_real_temporal_context(
         statistics["anomaly_score"]
         == anomaly.score
     )
+def test_timescaledb_contains_no_ground_truth_labels(
+    timescale_client,
+):
+    """Operational time-series data must contain no RCAEval label."""
+
+    result = timescale_client.execute(
+        """
+        SELECT
+            COUNT(*) AS total_rows,
+            COUNT(*) FILTER (
+                WHERE fault IS NOT NULL
+            ) AS labeled_rows
+        FROM metric_observations;
+        """,
+        fetch=True,
+    )
+
+    assert result
+    assert result[0]["total_rows"] > 0
+    assert result[0]["labeled_rows"] == 0

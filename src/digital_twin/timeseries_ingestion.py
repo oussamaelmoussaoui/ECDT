@@ -64,11 +64,9 @@ INSERT INTO {METRIC_TABLE} (
     metric_type,
     metric_name,
     case_id,
-    dataset,
-    fault
+    dataset
 )
 VALUES (
-    %s,
     %s,
     %s,
     %s,
@@ -173,11 +171,6 @@ def _event_to_row(
         "dataset",
     )
 
-    fault = _get_attribute(
-        event,
-        "fault",
-    )
-
     if not case_id:
         raise ValueError(
             "Metric event is missing case_id."
@@ -216,7 +209,6 @@ def _event_to_row(
         str(metric_name),
         str(case_id),
         str(dataset) if dataset is not None else None,
-        str(fault) if fault is not None else None,
     )
 
 

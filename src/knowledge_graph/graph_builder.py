@@ -572,6 +572,7 @@ def create_incidents(
     query = """
     MERGE (i:Incident {id: $case})
     SET
+        i.source = 'RCAEVAL_GROUND_TRUTH',
         i.case = $case,
         i.dataset = $dataset,
         i.fault = $fault,
@@ -663,6 +664,19 @@ def get_graph_statistics(
             MATCH (i:Incident)
             RETURN count(i) AS count
         """,
+        "ground_truth_incidents": """
+            MATCH (i:Incident {
+                source: 'RCAEVAL_GROUND_TRUTH'
+            })
+            RETURN count(i) AS count
+        """,
+
+        "observer_incidents": """
+            MATCH (i:Incident {
+                source: 'ECDT_OBSERVER'
+            })
+            RETURN count(i) AS count
+        """,
         "dependencies": """
             MATCH (:Service)-[r:DEPENDS_ON]->(:Service)
             RETURN count(r) AS count
@@ -709,7 +723,7 @@ def verify_graph(
     expected = {
         "services": 39,
         "dependencies": 64,
-        "incidents": 60,
+        "ground_truth_incidents": 60,
         "caused_by": 60,
     }
 

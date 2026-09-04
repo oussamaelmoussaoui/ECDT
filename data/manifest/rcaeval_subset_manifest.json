@@ -1,0 +1,1886 @@
+{
+  "cases": [
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_checkoutservice_cpu_1",
+      "dataset": "RE2-OB",
+      "fault": "cpu",
+      "incident_type": null,
+      "inject_time_ms": 1705354566000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 171322
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 72,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 391997
+        }
+      },
+      "root_cause_service": "checkoutservice",
+      "time_end_ms": 1705355286000,
+      "time_start_ms": 1705353846000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_checkoutservice_delay_1",
+      "dataset": "RE2-OB",
+      "fault": "delay",
+      "incident_type": null,
+      "inject_time_ms": 1705666511000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 177868
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 75,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 405229
+        }
+      },
+      "root_cause_service": "checkoutservice",
+      "time_end_ms": 1705667231000,
+      "time_start_ms": 1705665791000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_checkoutservice_loss_1",
+      "dataset": "RE2-OB",
+      "fault": "loss",
+      "incident_type": null,
+      "inject_time_ms": 1705376266000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 168467
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 74,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 385793
+        }
+      },
+      "root_cause_service": "checkoutservice",
+      "time_end_ms": 1705376986000,
+      "time_start_ms": 1705375546000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_checkoutservice_socket_1",
+      "dataset": "RE2-OB",
+      "fault": "socket",
+      "incident_type": null,
+      "inject_time_ms": 1705656313000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 177376
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 77,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 404289
+        }
+      },
+      "root_cause_service": "checkoutservice",
+      "time_end_ms": 1705657033000,
+      "time_start_ms": 1705655593000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_currencyservice_cpu_1",
+      "dataset": "RE2-OB",
+      "fault": "cpu",
+      "incident_type": null,
+      "inject_time_ms": 1705682817000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 175589
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 75,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 401542
+        }
+      },
+      "root_cause_service": "currencyservice",
+      "time_end_ms": 1705683537000,
+      "time_start_ms": 1705682097000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_currencyservice_delay_1",
+      "dataset": "RE2-OB",
+      "fault": "delay",
+      "incident_type": null,
+      "inject_time_ms": 1705702012000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 161224
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 76,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 383583
+        }
+      },
+      "root_cause_service": "currencyservice",
+      "time_end_ms": 1705702732000,
+      "time_start_ms": 1705701292000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_currencyservice_loss_1",
+      "dataset": "RE2-OB",
+      "fault": "loss",
+      "incident_type": null,
+      "inject_time_ms": 1705388941000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 131836
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 74,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 286200
+        }
+      },
+      "root_cause_service": "currencyservice",
+      "time_end_ms": 1705389661000,
+      "time_start_ms": 1705388221000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_currencyservice_socket_1",
+      "dataset": "RE2-OB",
+      "fault": "socket",
+      "incident_type": null,
+      "inject_time_ms": 1705479661000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 178239
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 71,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 406431
+        }
+      },
+      "root_cause_service": "currencyservice",
+      "time_end_ms": 1705480381000,
+      "time_start_ms": 1705478941000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_emailservice_cpu_1",
+      "dataset": "RE2-OB",
+      "fault": "cpu",
+      "incident_type": null,
+      "inject_time_ms": 1705350165000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 171212
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 72,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 392420
+        }
+      },
+      "root_cause_service": "emailservice",
+      "time_end_ms": 1705350885000,
+      "time_start_ms": 1705349445000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_emailservice_delay_1",
+      "dataset": "RE2-OB",
+      "fault": "delay",
+      "incident_type": null,
+      "inject_time_ms": 1705733346000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 178258
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 74,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 406121
+        }
+      },
+      "root_cause_service": "emailservice",
+      "time_end_ms": 1705734066000,
+      "time_start_ms": 1705732626000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_emailservice_loss_1",
+      "dataset": "RE2-OB",
+      "fault": "loss",
+      "incident_type": null,
+      "inject_time_ms": 1705351632000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 169916
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 72,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 386467
+        }
+      },
+      "root_cause_service": "emailservice",
+      "time_end_ms": 1705352352000,
+      "time_start_ms": 1705350912000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_emailservice_socket_1",
+      "dataset": "RE2-OB",
+      "fault": "socket",
+      "incident_type": null,
+      "inject_time_ms": 1705726260000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 179307
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 74,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 408640
+        }
+      },
+      "root_cause_service": "emailservice",
+      "time_end_ms": 1705726980000,
+      "time_start_ms": 1705725540000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_productcatalogservice_cpu_1",
+      "dataset": "RE2-OB",
+      "fault": "cpu",
+      "incident_type": null,
+      "inject_time_ms": 1705340542000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 172220
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 71,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 393266
+        }
+      },
+      "root_cause_service": "productcatalogservice",
+      "time_end_ms": 1705341262000,
+      "time_start_ms": 1705339822000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_productcatalogservice_delay_1",
+      "dataset": "RE2-OB",
+      "fault": "delay",
+      "incident_type": null,
+      "inject_time_ms": 1705394578000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 160317
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 71,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 365023
+        }
+      },
+      "root_cause_service": "productcatalogservice",
+      "time_end_ms": 1705395298000,
+      "time_start_ms": 1705393858000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_productcatalogservice_loss_1",
+      "dataset": "RE2-OB",
+      "fault": "loss",
+      "incident_type": null,
+      "inject_time_ms": 1705342830000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 117601
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 72,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 254889
+        }
+      },
+      "root_cause_service": "productcatalogservice",
+      "time_end_ms": 1705343550000,
+      "time_start_ms": 1705342110000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_productcatalogservice_socket_1",
+      "dataset": "RE2-OB",
+      "fault": "socket",
+      "incident_type": null,
+      "inject_time_ms": 1705392233000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 168357
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 71,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 383626
+        }
+      },
+      "root_cause_service": "productcatalogservice",
+      "time_end_ms": 1705392953000,
+      "time_start_ms": 1705391513000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_recommendationservice_cpu_1",
+      "dataset": "RE2-OB",
+      "fault": "cpu",
+      "incident_type": null,
+      "inject_time_ms": 1705345765000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 171429
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 72,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 391057
+        }
+      },
+      "root_cause_service": "recommendationservice",
+      "time_end_ms": 1705346485000,
+      "time_start_ms": 1705345045000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_recommendationservice_delay_1",
+      "dataset": "RE2-OB",
+      "fault": "delay",
+      "incident_type": null,
+      "inject_time_ms": 1705400377000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 172404
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 71,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 393688
+        }
+      },
+      "root_cause_service": "recommendationservice",
+      "time_end_ms": 1705401097000,
+      "time_start_ms": 1705399657000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_recommendationservice_loss_1",
+      "dataset": "RE2-OB",
+      "fault": "loss",
+      "incident_type": null,
+      "inject_time_ms": 1705347231000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 147413
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 73,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 299508
+        }
+      },
+      "root_cause_service": "recommendationservice",
+      "time_end_ms": 1705347951000,
+      "time_start_ms": 1705346511000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2ob_recommendationservice_socket_1",
+      "dataset": "RE2-OB",
+      "fault": "socket",
+      "incident_type": null,
+      "inject_time_ms": 1705398242000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 131908
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 71,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 303835
+        }
+      },
+      "root_cause_service": "recommendationservice",
+      "time_end_ms": 1705398962000,
+      "time_start_ms": 1705397522000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_carts_cpu_1",
+      "dataset": "RE2-SS",
+      "fault": "cpu",
+      "incident_type": null,
+      "inject_time_ms": 1705596179000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 86592
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 75,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "carts",
+      "time_end_ms": 1705596899000,
+      "time_start_ms": 1705595459000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_carts_delay_1",
+      "dataset": "RE2-SS",
+      "fault": "delay",
+      "incident_type": null,
+      "inject_time_ms": 1705662624000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 83040
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 79,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "carts",
+      "time_end_ms": 1705663344000,
+      "time_start_ms": 1705661904000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_carts_loss_1",
+      "dataset": "RE2-SS",
+      "fault": "loss",
+      "incident_type": null,
+      "inject_time_ms": 1705664209000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 84486
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 79,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "carts",
+      "time_end_ms": 1705664929000,
+      "time_start_ms": 1705663489000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_carts_socket_1",
+      "dataset": "RE2-SS",
+      "fault": "socket",
+      "incident_type": null,
+      "inject_time_ms": 1705632937000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 88689
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 79,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "carts",
+      "time_end_ms": 1705633657000,
+      "time_start_ms": 1705632217000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_catalogue_cpu_1",
+      "dataset": "RE2-SS",
+      "fault": "cpu",
+      "incident_type": null,
+      "inject_time_ms": 1705600751000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 78035
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 75,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "catalogue",
+      "time_end_ms": 1705601471000,
+      "time_start_ms": 1705600031000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_catalogue_delay_1",
+      "dataset": "RE2-SS",
+      "fault": "delay",
+      "incident_type": null,
+      "inject_time_ms": 1705640134000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 88601
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 80,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "catalogue",
+      "time_end_ms": 1705640854000,
+      "time_start_ms": 1705639414000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_catalogue_loss_1",
+      "dataset": "RE2-SS",
+      "fault": "loss",
+      "incident_type": null,
+      "inject_time_ms": 1705602312000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 57320
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 76,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "catalogue",
+      "time_end_ms": 1705603032000,
+      "time_start_ms": 1705601592000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_catalogue_socket_1",
+      "dataset": "RE2-SS",
+      "fault": "socket",
+      "incident_type": null,
+      "inject_time_ms": 1705638535000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 89439
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 80,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "catalogue",
+      "time_end_ms": 1705639255000,
+      "time_start_ms": 1705637815000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_orders_cpu_1",
+      "dataset": "RE2-SS",
+      "fault": "cpu",
+      "incident_type": null,
+      "inject_time_ms": 1705605431000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 86534
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 77,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "orders",
+      "time_end_ms": 1705606151000,
+      "time_start_ms": 1705604711000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_orders_delay_1",
+      "dataset": "RE2-SS",
+      "fault": "delay",
+      "incident_type": null,
+      "inject_time_ms": 1705644992000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 88610
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 80,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "orders",
+      "time_end_ms": 1705645712000,
+      "time_start_ms": 1705644272000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_orders_loss_1",
+      "dataset": "RE2-SS",
+      "fault": "loss",
+      "incident_type": null,
+      "inject_time_ms": 1705607010000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 89230
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 77,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "orders",
+      "time_end_ms": 1705607730000,
+      "time_start_ms": 1705606290000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_orders_socket_1",
+      "dataset": "RE2-SS",
+      "fault": "socket",
+      "incident_type": null,
+      "inject_time_ms": 1705643392000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 89905
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 80,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "orders",
+      "time_end_ms": 1705644112000,
+      "time_start_ms": 1705642672000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_payment_cpu_1",
+      "dataset": "RE2-SS",
+      "fault": "cpu",
+      "incident_type": null,
+      "inject_time_ms": 1705610176000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 86881
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 77,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "payment",
+      "time_end_ms": 1705610896000,
+      "time_start_ms": 1705609456000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_payment_delay_1",
+      "dataset": "RE2-SS",
+      "fault": "delay",
+      "incident_type": null,
+      "inject_time_ms": 1705650625000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 86312
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 81,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "payment",
+      "time_end_ms": 1705651345000,
+      "time_start_ms": 1705649905000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_payment_loss_1",
+      "dataset": "RE2-SS",
+      "fault": "loss",
+      "incident_type": null,
+      "inject_time_ms": 1705611754000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 92962
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 78,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "payment",
+      "time_end_ms": 1705612474000,
+      "time_start_ms": 1705611034000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_payment_socket_1",
+      "dataset": "RE2-SS",
+      "fault": "socket",
+      "incident_type": null,
+      "inject_time_ms": 1705649020000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 85811
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 81,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "payment",
+      "time_end_ms": 1705649740000,
+      "time_start_ms": 1705648300000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_user_cpu_1",
+      "dataset": "RE2-SS",
+      "fault": "cpu",
+      "incident_type": null,
+      "inject_time_ms": 1705614889000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 77384
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 78,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "user",
+      "time_end_ms": 1705615609000,
+      "time_start_ms": 1705614169000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_user_delay_1",
+      "dataset": "RE2-SS",
+      "fault": "delay",
+      "incident_type": null,
+      "inject_time_ms": 1705656234000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 81553
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 82,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "user",
+      "time_end_ms": 1705656954000,
+      "time_start_ms": 1705655514000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_user_loss_1",
+      "dataset": "RE2-SS",
+      "fault": "loss",
+      "incident_type": null,
+      "inject_time_ms": 1705616460000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 53507
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 79,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "user",
+      "time_end_ms": 1705617180000,
+      "time_start_ms": 1705615740000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "ground_truth"
+      ],
+      "case_id": "re2ss_user_socket_1",
+      "dataset": "RE2-SS",
+      "fault": "socket",
+      "incident_type": null,
+      "inject_time_ms": 1705654636000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 84250
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 82,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": false,
+          "source_row_count": 0
+        }
+      },
+      "root_cause_service": "user",
+      "time_end_ms": 1705655356000,
+      "time_start_ms": 1705653916000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-auth-service_cpu_1",
+      "dataset": "RE2-TT",
+      "fault": "cpu",
+      "incident_type": null,
+      "inject_time_ms": 1705918105000,
+      "modalities": {
+        "logs": {
+          "available_in_source": false,
+          "source_row_count": 0
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 369,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1143435
+        }
+      },
+      "root_cause_service": "ts-auth-service",
+      "time_end_ms": 1705918825000,
+      "time_start_ms": 1705917385000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-auth-service_delay_1",
+      "dataset": "RE2-TT",
+      "fault": "delay",
+      "incident_type": null,
+      "inject_time_ms": 1705921865000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 266174
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 371,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1153677
+        }
+      },
+      "root_cause_service": "ts-auth-service",
+      "time_end_ms": 1705922585000,
+      "time_start_ms": 1705921145000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-auth-service_loss_1",
+      "dataset": "RE2-TT",
+      "fault": "loss",
+      "incident_type": null,
+      "inject_time_ms": 1705983003000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 276063
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 367,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 961039
+        }
+      },
+      "root_cause_service": "ts-auth-service",
+      "time_end_ms": 1705983723000,
+      "time_start_ms": 1705982283000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-auth-service_socket_1",
+      "dataset": "RE2-TT",
+      "fault": "socket",
+      "incident_type": null,
+      "inject_time_ms": 1705981508000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 270617
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 362,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 829373
+        }
+      },
+      "root_cause_service": "ts-auth-service",
+      "time_end_ms": 1705982228000,
+      "time_start_ms": 1705980788000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-order-service_cpu_1",
+      "dataset": "RE2-TT",
+      "fault": "cpu",
+      "incident_type": null,
+      "inject_time_ms": 1705935125000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 269233
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 357,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 628113
+        }
+      },
+      "root_cause_service": "ts-order-service",
+      "time_end_ms": 1705935845000,
+      "time_start_ms": 1705934405000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-order-service_delay_1",
+      "dataset": "RE2-TT",
+      "fault": "delay",
+      "incident_type": null,
+      "inject_time_ms": 1705952245000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 146141
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 374,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 779417
+        }
+      },
+      "root_cause_service": "ts-order-service",
+      "time_end_ms": 1705952965000,
+      "time_start_ms": 1705951525000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-order-service_loss_1",
+      "dataset": "RE2-TT",
+      "fault": "loss",
+      "incident_type": null,
+      "inject_time_ms": 1705988266000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 270219
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 373,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1293243
+        }
+      },
+      "root_cause_service": "ts-order-service",
+      "time_end_ms": 1705988986000,
+      "time_start_ms": 1705987546000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-order-service_socket_1",
+      "dataset": "RE2-TT",
+      "fault": "socket",
+      "incident_type": null,
+      "inject_time_ms": 1705986772000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 269123
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 372,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1204370
+        }
+      },
+      "root_cause_service": "ts-order-service",
+      "time_end_ms": 1705987492000,
+      "time_start_ms": 1705986052000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-route-service_cpu_1",
+      "dataset": "RE2-TT",
+      "fault": "cpu",
+      "incident_type": null,
+      "inject_time_ms": 1705938117000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 257658
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 365,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 758384
+        }
+      },
+      "root_cause_service": "ts-route-service",
+      "time_end_ms": 1705938837000,
+      "time_start_ms": 1705937397000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-route-service_delay_1",
+      "dataset": "RE2-TT",
+      "fault": "delay",
+      "incident_type": null,
+      "inject_time_ms": 1705939611000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 238158
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 366,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 783245
+        }
+      },
+      "root_cause_service": "ts-route-service",
+      "time_end_ms": 1705940331000,
+      "time_start_ms": 1705938891000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-route-service_loss_1",
+      "dataset": "RE2-TT",
+      "fault": "loss",
+      "incident_type": null,
+      "inject_time_ms": 1705993539000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 197087
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 375,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1198291
+        }
+      },
+      "root_cause_service": "ts-route-service",
+      "time_end_ms": 1705994259000,
+      "time_start_ms": 1705992819000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-route-service_socket_1",
+      "dataset": "RE2-TT",
+      "fault": "socket",
+      "incident_type": null,
+      "inject_time_ms": 1705992046000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 256485
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 375,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1535674
+        }
+      },
+      "root_cause_service": "ts-route-service",
+      "time_end_ms": 1705992766000,
+      "time_start_ms": 1705991326000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-train-service_cpu_1",
+      "dataset": "RE2-TT",
+      "fault": "cpu",
+      "incident_type": null,
+      "inject_time_ms": 1705942599000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 272238
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 370,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1053578
+        }
+      },
+      "root_cause_service": "ts-train-service",
+      "time_end_ms": 1705943319000,
+      "time_start_ms": 1705941879000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-train-service_delay_1",
+      "dataset": "RE2-TT",
+      "fault": "delay",
+      "incident_type": null,
+      "inject_time_ms": 1705944092000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 239017
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 371,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1000430
+        }
+      },
+      "root_cause_service": "ts-train-service",
+      "time_end_ms": 1705944812000,
+      "time_start_ms": 1705943372000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-train-service_loss_1",
+      "dataset": "RE2-TT",
+      "fault": "loss",
+      "incident_type": null,
+      "inject_time_ms": 1708448623000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 314211
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 369,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 1025176
+        }
+      },
+      "root_cause_service": "ts-train-service",
+      "time_end_ms": 1708449343000,
+      "time_start_ms": 1708447903000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-train-service_socket_1",
+      "dataset": "RE2-TT",
+      "fault": "socket",
+      "incident_type": null,
+      "inject_time_ms": 1705997317000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 107304
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 376,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 382423
+        }
+      },
+      "root_cause_service": "ts-train-service",
+      "time_end_ms": 1705998037000,
+      "time_start_ms": 1705996597000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-travel-service_cpu_1",
+      "dataset": "RE2-TT",
+      "fault": "cpu",
+      "incident_type": null,
+      "inject_time_ms": 1708453056000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 302701
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 360,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 730224
+        }
+      },
+      "root_cause_service": "ts-travel-service",
+      "time_end_ms": 1708453776000,
+      "time_start_ms": 1708452336000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-travel-service_delay_1",
+      "dataset": "RE2-TT",
+      "fault": "delay",
+      "incident_type": null,
+      "inject_time_ms": 1706013574000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 245246
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 364,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 929570
+        }
+      },
+      "root_cause_service": "ts-travel-service",
+      "time_end_ms": 1706014294000,
+      "time_start_ms": 1706012854000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-travel-service_loss_1",
+      "dataset": "RE2-TT",
+      "fault": "loss",
+      "incident_type": null,
+      "inject_time_ms": 1708454598000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 309984
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 359,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 877130
+        }
+      },
+      "root_cause_service": "ts-travel-service",
+      "time_end_ms": 1708455318000,
+      "time_start_ms": 1708453878000
+    },
+    {
+      "associated_files": [
+        "metrics",
+        "logs",
+        "traces",
+        "ground_truth"
+      ],
+      "case_id": "re2tt_ts-travel-service_socket_1",
+      "dataset": "RE2-TT",
+      "fault": "socket",
+      "incident_type": null,
+      "inject_time_ms": 1706146324000,
+      "modalities": {
+        "logs": {
+          "available_in_source": true,
+          "source_row_count": 59169
+        },
+        "metrics": {
+          "available_in_source": true,
+          "source_metric_count": 368,
+          "source_row_count": 1441
+        },
+        "traces": {
+          "available_in_source": true,
+          "source_row_count": 163434
+        }
+      },
+      "root_cause_service": "ts-travel-service",
+      "time_end_ms": 1706147044000,
+      "time_start_ms": 1706145604000
+    }
+  ],
+  "files": {
+    "ground_truth": {
+      "path": "data/ground_truth/target_incidents.csv",
+      "sha256": "abbb3a9913d70b446739f92a3e605ec12c029326cee6847030e7bba7cea866d3",
+      "size_bytes": 8183
+    },
+    "logs": {
+      "path": "data/processed/logs/target_logs.csv",
+      "sha256": "e62cdaff749ce8f6ac1d9917a7e365fbc60a0abb57f8161f4c32dbb8b0dc696f",
+      "size_bytes": 3214350694
+    },
+    "metrics": {
+      "path": "data/processed/metrics/target_metrics.csv",
+      "sha256": "f01b0ff3564551a2c870d80b463f8b195572b021731f0eb7df90d904fb6a416c",
+      "size_bytes": 221745536
+    },
+    "traces": {
+      "path": "data/processed/traces/target_traces.csv",
+      "sha256": "2d1991085e2548f760af9e94df4a7c03b2622e36106966e60809159a4323c004",
+      "size_bytes": 5740122856
+    }
+  },
+  "schema_version": "1.1",
+  "selection": {
+    "by_dataset": {
+      "RE2-OB": 20,
+      "RE2-SS": 20,
+      "RE2-TT": 20
+    },
+    "by_fault": {
+      "cpu": 15,
+      "delay": 15,
+      "loss": 15,
+      "socket": 15
+    },
+    "total_cases": 60
+  },
+  "source_provenance": {
+    "commit": null,
+    "dataset": "RCAEval",
+    "repository_url": null,
+    "status": "unavailable_in_local_copy"
+  }
+}

@@ -42,6 +42,8 @@ This module does NOT:
 from __future__ import annotations
 
 from datetime import datetime, timezone
+from math import floor, isfinite
+from statistics import median
 from typing import Any
 
 from .models import (
@@ -281,6 +283,163 @@ class TimescaleConsumer:
             "delta": last_value - first_value,
         }
 
+    @staticmethod
+    def compute_temporal_completeness(
+        observations: list[dict[str, Any]],
+        *,
+        requested_start_timestamp: float,
+        requested_end_timestamp: float,
+    ) -> dict[str, Any]:
+        """
+        Measure the effective temporal coverage of a requested window.
+
+        Timestamps are expressed as Unix epoch seconds.
+        The sampling interval is estimated from the median positive
+        interval between consecutive unique observations.
+        """
+
+        try:
+            requested_start = float(
+                requested_start_timestamp
+            )
+            requested_end = float(
+                requested_end_timestamp
+            )
+        except (TypeError, ValueError) as exc:
+            raise ValueError(
+                "Requested temporal bounds must be valid timestamps."
+            ) from exc
+
+        if not (
+            isfinite(requested_start)
+            and isfinite(requested_end)
+        ):
+            raise ValueError(
+                "Requested temporal bounds must be finite."
+            )
+
+        if requested_end < requested_start:
+            raise ValueError(
+                "Requested temporal end must not precede its start."
+            )
+
+        timestamps: set[float] = set()
+
+        for observation in observations:
+            timestamp = observation.get("timestamp")
+
+            if isinstance(timestamp, datetime):
+                if timestamp.tzinfo is None:
+                    timestamp = timestamp.replace(
+                        tzinfo=timezone.utc
+                    )
+
+                timestamp_seconds = timestamp.timestamp()
+
+            else:
+                try:
+                    timestamp_seconds = float(timestamp)
+                except (TypeError, ValueError):
+                    continue
+
+            if not isfinite(timestamp_seconds):
+                continue
+
+            if (
+                requested_start
+                <= timestamp_seconds
+                <= requested_end
+            ):
+                timestamps.add(timestamp_seconds)
+
+        ordered_timestamps = sorted(timestamps)
+        observed_count = len(ordered_timestamps)
+
+        base_result = {
+            "requested_start_timestamp": requested_start,
+            "requested_end_timestamp": requested_end,
+            "requested_duration_seconds": (
+                requested_end - requested_start
+            ),
+            "first_observation_timestamp": None,
+            "last_observation_timestamp": None,
+            "actual_coverage_duration_seconds": None,
+            "estimated_sampling_interval_seconds": None,
+            "expected_observation_count": None,
+            "observed_unique_timestamp_count": observed_count,
+            "missing_observation_count": None,
+            "temporal_data_completeness_ratio": None,
+        }
+
+        if not ordered_timestamps:
+            return base_result
+
+        first_timestamp = ordered_timestamps[0]
+        last_timestamp = ordered_timestamps[-1]
+
+        base_result.update(
+            {
+                "first_observation_timestamp": first_timestamp,
+                "last_observation_timestamp": last_timestamp,
+                "actual_coverage_duration_seconds": (
+                    last_timestamp - first_timestamp
+                ),
+            }
+        )
+
+        intervals = [
+            current - previous
+            for previous, current in zip(
+                ordered_timestamps,
+                ordered_timestamps[1:],
+            )
+            if current > previous
+        ]
+
+        if not intervals:
+            return base_result
+
+        sampling_interval = float(
+            median(intervals)
+        )
+
+        requested_duration = (
+            requested_end - requested_start
+        )
+
+        expected_count = (
+            floor(
+                requested_duration
+                / sampling_interval
+            )
+            + 1
+        )
+
+        missing_count = max(
+            expected_count - observed_count,
+            0,
+        )
+
+        completeness_ratio = min(
+            observed_count / expected_count,
+            1.0,
+        )
+
+        base_result.update(
+            {
+                "estimated_sampling_interval_seconds": (
+                    sampling_interval
+                ),
+                "expected_observation_count": expected_count,
+                "missing_observation_count": missing_count,
+                "temporal_data_completeness_ratio": (
+                    completeness_ratio
+                ),
+            }
+        )
+
+        return base_result
+
     # ------------------------------------------------------------------
     # Temporal context
     # ------------------------------------------------------------------
@@ -340,6 +499,29 @@ class TimescaleConsumer:
         statistics["anomaly_score"] = (
             anomaly.score
         )
+        window_seconds = window_minutes * 60
+
+        requested_start_timestamp = (
+            float(anomaly.timestamp)
+            - window_seconds
+        )
+
+        requested_end_timestamp = (
+            float(anomaly.timestamp)
+            + window_seconds
+        )
+
+        temporal_completeness = (
+            self.compute_temporal_completeness(
+                metric_observations,
+                requested_start_timestamp=(
+                    requested_start_timestamp
+                ),
+                requested_end_timestamp=(
+                    requested_end_timestamp
+                ),
+            )
+        )
 
         return TemporalContext(
             resource_id=anomaly.resource_id,
@@ -349,10 +531,75 @@ class TimescaleConsumer:
             signal_type=anomaly.signal_type,
 
             anomaly_timestamp=anomaly.timestamp,
+            window_before_seconds=window_seconds,
 
-            window_before_seconds=window_minutes * 60,
+            window_after_seconds=window_seconds,
 
-            window_after_seconds=window_minutes * 60,
+            requested_start_timestamp=(
+                temporal_completeness[
+                    "requested_start_timestamp"
+                ]
+            ),
+
+            requested_end_timestamp=(
+                temporal_completeness[
+                    "requested_end_timestamp"
+                ]
+            ),
+
+            requested_duration_seconds=(
+                temporal_completeness[
+                    "requested_duration_seconds"
+                ]
+            ),
+
+            first_observation_timestamp=(
+                temporal_completeness[
+                    "first_observation_timestamp"
+                ]
+            ),
+
+            last_observation_timestamp=(
+                temporal_completeness[
+                    "last_observation_timestamp"
+                ]
+            ),
+
+            actual_coverage_duration_seconds=(
+                temporal_completeness[
+                    "actual_coverage_duration_seconds"
+                ]
+            ),
+
+            estimated_sampling_interval_seconds=(
+                temporal_completeness[
+                    "estimated_sampling_interval_seconds"
+                ]
+            ),
+
+            expected_observation_count=(
+                temporal_completeness[
+                    "expected_observation_count"
+                ]
+            ),
+
+            observed_unique_timestamp_count=(
+                temporal_completeness[
+                    "observed_unique_timestamp_count"
+                ]
+            ),
+
+            missing_observation_count=(
+                temporal_completeness[
+                    "missing_observation_count"
+                ]
+            ),
+
+            temporal_data_completeness_ratio=(
+                temporal_completeness[
+                    "temporal_data_completeness_ratio"
+                ]
+            ),
 
             observations=metric_observations,
 

@@ -177,19 +177,20 @@ class DatasetLoader:
     # Expected schemas
     # ------------------------------------------------------------------
 
+    TELEMETRY_LABEL_COLUMNS = {
+        "fault",
+        "root_cause_service",
+    }
+
     METRICS_METADATA_COLUMNS = {
         "case",
         "dataset",
-        "fault",
-        "root_cause_service",
         "time",
     }
 
     LOG_COLUMNS = {
         "case",
         "dataset",
-        "fault",
-        "root_cause_service",
         "timestamp",
         "container_name",
         "message",
@@ -198,8 +199,6 @@ class DatasetLoader:
     TRACE_COLUMNS = {
         "case",
         "dataset",
-        "fault",
-        "root_cause_service",
         "time",
         "traceID",
         "spanID",
@@ -290,6 +289,25 @@ class DatasetLoader:
                 f"Missing columns: {sorted(missing)}"
             )
 
+    @classmethod
+    def _drop_telemetry_labels(
+        cls,
+        dataframe: pl.LazyFrame,
+        available_columns: list[str],
+    ) -> pl.LazyFrame:
+        """Remove RCAEval labels from operational telemetry."""
+
+        present_labels = [
+            column
+            for column in cls.TELEMETRY_LABEL_COLUMNS
+            if column in available_columns
+        ]
+
+        if present_labels:
+            return dataframe.drop(present_labels)
+
+        return dataframe
+
     # ------------------------------------------------------------------
     # Metrics
     # ------------------------------------------------------------------
@@ -347,6 +365,10 @@ class DatasetLoader:
             self.METRICS_METADATA_COLUMNS,
             "metrics",
         )
+        lf = self._drop_telemetry_labels(
+            lf,
+            available_columns,
+        )
 
         # --------------------------------------------------------------
         # Case filtering
@@ -396,16 +418,19 @@ class DatasetLoader:
             metadata_columns = [
                 "case",
                 "dataset",
-                "fault",
-                "root_cause_service",
                 "time",
                 "timestamp",
             ]
 
+            excluded_columns = (
+                self.METRICS_METADATA_COLUMNS
+                | self.TELEMETRY_LABEL_COLUMNS
+            )
+
             metric_columns = [
                 column
                 for column in available_columns
-                if column not in self.METRICS_METADATA_COLUMNS
+                if column not in excluded_columns
             ]
 
             lf = (
@@ -455,6 +480,10 @@ class DatasetLoader:
             self.METRICS_METADATA_COLUMNS,
             "metrics",
         )
+        lf = self._drop_telemetry_labels(
+            lf,
+            available_columns,
+        )
 
         if case_id is not None:
             lf = lf.filter(
@@ -485,16 +514,19 @@ class DatasetLoader:
             metadata_columns = [
                 "case",
                 "dataset",
-                "fault",
-                "root_cause_service",
                 "time",
                 "timestamp",
             ]
 
+            excluded_columns = (
+                self.METRICS_METADATA_COLUMNS
+                | self.TELEMETRY_LABEL_COLUMNS
+            )
+
             metric_columns = [
                 column
                 for column in available_columns
-                if column not in self.METRICS_METADATA_COLUMNS
+                if column not in excluded_columns
             ]
 
             lf = lf.unpivot(
@@ -537,6 +569,7 @@ class DatasetLoader:
             self.LOG_COLUMNS,
             "logs",
         )
+        lf = self._drop_telemetry_labels(lf, available_columns,)
 
         if case_id is not None:
             lf = lf.filter(
@@ -595,6 +628,11 @@ class DatasetLoader:
             available_columns,
             self.TRACE_COLUMNS,
             "traces",
+        )
+
+        lf = self._drop_telemetry_labels(
+            lf,
+            available_columns,
         )
 
         if case_id is not None:
@@ -840,10 +878,15 @@ class DatasetLoader:
 
         columns = lf.collect_schema().names()
 
+        excluded_columns = (
+            self.METRICS_METADATA_COLUMNS
+            | self.TELEMETRY_LABEL_COLUMNS
+        )
+
         return [
             column
             for column in columns
-            if column not in self.METRICS_METADATA_COLUMNS
+            if column not in excluded_columns
         ]
 
     # ------------------------------------------------------------------

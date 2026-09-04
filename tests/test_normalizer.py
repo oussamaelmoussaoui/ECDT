@@ -62,8 +62,6 @@ def test_normalize_metrics(loader, normalizer):
         "case_id",
         "timestamp_ms",
         "dataset",
-        "fault",
-        "root_cause_service",
         "source",
         "service_name",
         "signal_type",
@@ -72,6 +70,10 @@ def test_normalize_metrics(loader, normalizer):
     }
 
     assert expected_columns.issubset(set(events.columns))
+    assert {
+        "fault",
+        "root_cause_service",
+    }.isdisjoint(events.columns)
 
 
 def test_normalized_metric_types(loader, normalizer):
@@ -126,13 +128,15 @@ def test_normalize_logs(loader, normalizer):
         "case_id",
         "timestamp_ms",
         "dataset",
-        "fault",
-        "root_cause_service",
         "source",
         "message",
     }
 
     assert expected_columns.issubset(set(events.columns))
+    assert {
+        "fault",
+        "root_cause_service",
+    }.isdisjoint(events.columns)
 
 
 def test_normalize_traces(loader, normalizer):
@@ -150,8 +154,6 @@ def test_normalize_traces(loader, normalizer):
         "case_id",
         "timestamp_ms",
         "dataset",
-        "fault",
-        "root_cause_service",
         "source",
         "trace_id",
         "span_id",
@@ -163,6 +165,10 @@ def test_normalize_traces(loader, normalizer):
     }
 
     assert expected_columns.issubset(set(events.columns))
+    assert {
+        "fault",
+        "root_cause_service",
+    }.isdisjoint(events.columns)
 
 
 def test_normalize_all(loader, normalizer):
@@ -181,6 +187,10 @@ def test_normalize_all(loader, normalizer):
     )
 
     assert isinstance(events, pl.DataFrame)
+    assert {
+        "fault",
+        "root_cause_service",
+    }.isdisjoint(events.columns)
 
     assert events.height == 1_348_664
 

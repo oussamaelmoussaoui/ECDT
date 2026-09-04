@@ -454,7 +454,8 @@ def get_graph_statistics(
     client: Neo4jClient,
 ) -> dict[str, int]:
     """
-    Retrieve basic ECDT Knowledge Graph statistics.
+    Retrieve ECDT Knowledge Graph statistics,
+    distinguishing evaluation and operational incidents.
     """
 
     queries = {
@@ -462,14 +463,31 @@ def get_graph_statistics(
             MATCH (s:Service)
             RETURN count(s) AS count
         """,
+
         "incidents": """
             MATCH (i:Incident)
             RETURN count(i) AS count
         """,
+
+        "ground_truth_incidents": """
+            MATCH (i:Incident {
+                source: 'RCAEVAL_GROUND_TRUTH'
+            })
+            RETURN count(i) AS count
+        """,
+
+        "observer_incidents": """
+            MATCH (i:Incident {
+                source: 'ECDT_OBSERVER'
+            })
+            RETURN count(i) AS count
+        """,
+
         "dependencies": """
             MATCH (:Service)-[r:DEPENDS_ON]->(:Service)
             RETURN count(r) AS count
         """,
+
         "caused_by": """
             MATCH (:Incident)-[r:CAUSED_BY]->(:Service)
             RETURN count(r) AS count

@@ -197,6 +197,28 @@ class TemporalContext:
 
     window_after_seconds: int
 
+    requested_start_timestamp: float | None = None
+
+    requested_end_timestamp: float | None = None
+
+    requested_duration_seconds: float | None = None
+
+    first_observation_timestamp: float | None = None
+
+    last_observation_timestamp: float | None = None
+
+    actual_coverage_duration_seconds: float | None = None
+
+    estimated_sampling_interval_seconds: float | None = None
+
+    expected_observation_count: int | None = None
+
+    observed_unique_timestamp_count: int = 0
+
+    missing_observation_count: int | None = None
+
+    temporal_data_completeness_ratio: float | None = None
+
     observations: list[dict[str, Any]] = field(
         default_factory=list
     )
