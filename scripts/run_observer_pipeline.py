@@ -14,16 +14,12 @@ import json
 import logging
 import math
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from dataclasses import asdict, is_dataclass, replace
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
 from typing import Any, Sequence
-from collections import Counter
-
-
-
 LOGGER = logging.getLogger("run_observer_pipeline")
 
 
@@ -848,7 +844,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 
         timescale_case_rows_after = existing_metric_rows + inserted_metrics
 
-        
+
 
         detector = create_detector(
             method=DetectionMethod(args.method),
@@ -1011,7 +1007,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 LOGGER.exception("Échec du traitement Observer")
                 if not args.continue_on_error:
                     raise
-        
+
         evaluation_fault = str(
             case_info.fault
         ).strip().lower()
@@ -1041,9 +1037,6 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "timescale_case_rows_after": timescale_case_rows_after,
             "timescale_ingestion_status": ingestion_status,
             "invalid_metric_values_skipped": skipped_metric_values,
-            "metric_value_rejection_summary": (
-                metric_value_rejection_summary
-            ),
             "metric_value_rejection_summary": (
                 metric_value_rejection_summary
             ),
