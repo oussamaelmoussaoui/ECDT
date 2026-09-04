@@ -548,6 +548,26 @@ def _group_anomalies_into_episodes(
     return episodes
 
 
+def _topology_coverage_ratio(
+    total_anomalies: int,
+    eligible_anomalies: int,
+) -> float | None:
+    """Return the share of anomalies mapped to operational topology."""
+
+    if total_anomalies < 0 or eligible_anomalies < 0:
+        raise ValueError("anomaly counts must be non-negative")
+
+    if eligible_anomalies > total_anomalies:
+        raise ValueError(
+            "eligible_anomalies cannot exceed total_anomalies"
+        )
+
+    if total_anomalies == 0:
+        return None
+
+    return eligible_anomalies / total_anomalies
+
+
 def _summarize_temporal_context(temporal_context: Any) -> dict[str, Any]:
     """Build a compact report without duplicating raw TimescaleDB rows."""
     if isinstance(temporal_context, dict):
@@ -870,7 +890,15 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         # ne doit pas être transmise à l'Observer, qui refuse volontairement
         # de créer des nœuds Service implicites.
         service_rows = neo4j.execute(
-            "MATCH (s:Service) RETURN s.id AS service_id"
+            """
+            MATCH (s:Service {
+                source: $topology_source
+            })
+            RETURN s.id AS service_id
+            """,
+            {
+                "topology_source": "topology",
+            },
         )
         known_service_ids = {
             str(row["service_id"])
@@ -900,6 +928,10 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 for anomaly in outside_topology_anomalies
                 if anomaly.service is not None
             }
+        )
+        topology_coverage_ratio = _topology_coverage_ratio(
+            len(anomalies),
+            len(eligible_anomalies),
         )
 
         if outside_topology_anomalies:
@@ -1017,7 +1049,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 evaluation_fault
             )
         )
-        
+
         return {
             "case_id": case_info.case_id,
             "dataset": case_info.dataset,
@@ -1044,6 +1076,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "anomalies_eligible_for_observer": len(eligible_anomalies),
             "anomalies_outside_topology": len(outside_topology_anomalies),
             "outside_topology_services": outside_topology_services,
+            "topology_service_count": len(known_service_ids),
+            "topology_coverage_ratio": topology_coverage_ratio,
+            "topology_scope": "service.source=topology",
             "episode_gap_seconds": args.episode_gap_seconds,
             "episodes_detected": len(episodes),
             "anomalies_collapsed_into_episodes": (

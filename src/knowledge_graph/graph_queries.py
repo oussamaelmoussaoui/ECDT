@@ -7,12 +7,13 @@ Graph model:
 
     (:Service)-[:DEPENDS_ON]->(:Service)
     (:Incident)-[:CAUSED_BY]->(:Service)
+    (:Incident)-[:AFFECTS]->(:Service)
 
 Main capabilities:
     - Find upstream dependencies.
     - Find downstream impacts.
-    - Find the root cause of an incident.
-    - Find incidents caused by a service.
+    - Read RCAEval ground truth through an explicit evaluation view.
+    - Read Observer incidents through an isolated operational view.
     - Explore the neighborhood of a service.
     - Retrieve basic graph statistics.
 
@@ -25,6 +26,11 @@ from __future__ import annotations
 from typing import Any
 
 from src.knowledge_graph.neo4j_client import Neo4jClient
+
+
+GROUND_TRUTH_SOURCE = "RCAEVAL_GROUND_TRUTH"
+OBSERVER_SOURCE = "ECDT_OBSERVER"
+TOPOLOGY_SOURCE = "topology"
 
 
 # ---------------------------------------------------------------------------
@@ -309,7 +315,10 @@ def get_incident_root_cause(
 
     query = """
     MATCH
-        (i:Incident {id: $incident_id})
+        (i:Incident {
+            id: $incident_id,
+            source: $incident_source
+        })
         -[:CAUSED_BY]->
         (s:Service)
 
@@ -322,6 +331,7 @@ def get_incident_root_cause(
         query,
         {
             "incident_id": incident_id,
+            "incident_source": GROUND_TRUTH_SOURCE,
         },
     )
 
@@ -341,7 +351,9 @@ def get_service_incidents(
 
     query = """
     MATCH
-        (i:Incident)
+        (i:Incident {
+            source: $incident_source
+        })
         -[:CAUSED_BY]->
         (s:Service {id: $service_id})
 
@@ -360,6 +372,7 @@ def get_service_incidents(
         query,
         {
             "service_id": service_id,
+            "incident_source": GROUND_TRUTH_SOURCE,
         },
     )
 
@@ -378,7 +391,10 @@ def get_incident(
     """
 
     query = """
-    MATCH (i:Incident {id: $incident_id})
+    MATCH (i:Incident {
+        id: $incident_id,
+        source: $incident_source
+    })
 
     OPTIONAL MATCH
         (i)-[:CAUSED_BY]->(s:Service)
@@ -401,6 +417,7 @@ def get_incident(
         query,
         {
             "incident_id": incident_id,
+            "incident_source": GROUND_TRUTH_SOURCE,
         },
     )
 
@@ -441,6 +458,98 @@ def get_service_neighborhood(
         query,
         {
             "service_id": service_id,
+        },
+    )
+
+
+# ---------------------------------------------------------------------------
+# Explicit operational and evaluation views
+# ---------------------------------------------------------------------------
+
+
+def get_operational_graph_view(
+    client: Neo4jClient,
+    case_id: str,
+) -> list[dict[str, Any]]:
+    """Return Observer incidents without consulting evaluation truth."""
+
+    if not case_id:
+        raise ValueError("case_id must not be empty")
+
+    query = """
+    MATCH
+        (i:Incident {
+            source: $incident_source,
+            case_id: $case_id
+        })
+        -[:AFFECTS]->
+        (affected:Service {
+            source: $topology_source
+        })
+
+    OPTIONAL MATCH
+        (affected)-[:DEPENDS_ON]->(dependency:Service)
+
+    RETURN
+        i.id AS incident_id,
+        i.case_id AS case_id,
+        i.incident_type AS incident_type,
+        i.status AS status,
+        i.confidence AS confidence,
+        i.source AS source,
+        i.created_at AS created_at,
+        i.pipeline_version AS pipeline_version,
+        affected.id AS affected_service,
+        collect(DISTINCT dependency.id) AS dependencies
+
+    ORDER BY incident_id
+    """
+
+    return client.execute(
+        query,
+        {
+            "case_id": case_id,
+            "incident_source": OBSERVER_SOURCE,
+            "topology_source": TOPOLOGY_SOURCE,
+        },
+    )
+
+
+def get_evaluation_graph_view(
+    client: Neo4jClient,
+    case_id: str,
+) -> list[dict[str, Any]]:
+    """Return RCAEval truth for post-prediction evaluation only."""
+
+    if not case_id:
+        raise ValueError("case_id must not be empty")
+
+    query = """
+    MATCH
+        (i:Incident {
+            source: $incident_source
+        })
+        -[:CAUSED_BY]->
+        (root:Service)
+
+    WHERE coalesce(i.case_id, i.case) = $case_id
+
+    RETURN
+        i.id AS incident_id,
+        coalesce(i.case_id, i.case) AS case_id,
+        i.fault AS fault,
+        i.incident_type AS incident_type,
+        i.source AS source,
+        i.created_at AS created_at,
+        i.pipeline_version AS pipeline_version,
+        root.id AS root_cause_service
+    """
+
+    return client.execute(
+        query,
+        {
+            "case_id": case_id,
+            "incident_source": GROUND_TRUTH_SOURCE,
         },
     )
 
@@ -492,6 +601,38 @@ def get_graph_statistics(
             MATCH (:Incident)-[r:CAUSED_BY]->(:Service)
             RETURN count(r) AS count
         """,
+
+        "affects": """
+            MATCH (:Incident)-[r:AFFECTS]->(:Service)
+            RETURN count(r) AS count
+        """,
+
+        "ground_truth_provenance_complete": """
+            MATCH (i:Incident {
+                source: 'RCAEVAL_GROUND_TRUTH'
+            })
+            WHERE i.case_id IS NOT NULL
+              AND i.created_at IS NOT NULL
+              AND i.pipeline_version IS NOT NULL
+            RETURN count(i) AS count
+        """,
+
+        "observer_provenance_complete": """
+            MATCH (i:Incident {
+                source: 'ECDT_OBSERVER'
+            })
+            WHERE i.case_id IS NOT NULL
+              AND i.created_at IS NOT NULL
+              AND i.pipeline_version IS NOT NULL
+            RETURN count(i) AS count
+        """,
+
+        "duplicate_affects": """
+            MATCH (i:Incident)-[r:AFFECTS]->(s:Service)
+            WITH i, s, count(r) AS copies
+            WHERE copies > 1
+            RETURN coalesce(sum(copies - 1), 0) AS count
+        """,
     }
 
     statistics: dict[str, int] = {}
@@ -531,7 +672,26 @@ def get_graph_overview(
         "relationship_types": [
             "DEPENDS_ON",
             "CAUSED_BY",
+            "AFFECTS",
         ],
+        "view_contracts": {
+            "operational": {
+                "incident_source": OBSERVER_SOURCE,
+                "service_source": TOPOLOGY_SOURCE,
+                "relationship_types": [
+                    "AFFECTS",
+                    "DEPENDS_ON",
+                ],
+                "ground_truth_access": False,
+            },
+            "evaluation": {
+                "incident_source": GROUND_TRUTH_SOURCE,
+                "relationship_types": [
+                    "CAUSED_BY",
+                ],
+                "ground_truth_access": True,
+            },
+        },
     }
 
 

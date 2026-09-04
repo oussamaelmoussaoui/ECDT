@@ -1,9 +1,13 @@
+from dataclasses import replace
 from unittest.mock import MagicMock
 
 import pytest
 
 from src.agents.observer.incident_persistence import (
     IncidentPersistence,
+    OBSERVER_PIPELINE_VERSION,
+    OBSERVER_SOURCE,
+    TOPOLOGY_SOURCE,
 )
 
 from src.agents.observer.models import (
@@ -355,6 +359,15 @@ def test_parameter_serialization():
         parameters["confidence"],
         float,
     )
+
+    assert parameters["source"] == OBSERVER_SOURCE
+    assert parameters["topology_source"] == TOPOLOGY_SOURCE
+    assert (
+        parameters["pipeline_version"]
+        == OBSERVER_PIPELINE_VERSION
+    )
+
+
 def test_operational_queries_never_access_caused_by():
     """Observer persistence must never read or write ground truth."""
 
@@ -423,3 +436,89 @@ def test_operational_queries_never_access_caused_by():
         "AFFECTS" in query.upper()
         for query in executed_queries
     )
+
+
+def test_writes_require_existing_operational_topology():
+    """Persistence may match topology services but never create them."""
+
+    client = MagicMock()
+    client.execute_write.return_value = [
+        {
+            "incident_id": "inc_123",
+            "resource_id": "checkoutservice",
+        }
+    ]
+    persistence = IncidentPersistence(client)
+    incident = make_incident()
+
+    persistence.create_incident(incident)
+    persistence.link_incident_to_resource(incident)
+    persistence.persist_incident(incident)
+
+    for call in client.execute_write.call_args_list:
+        query, parameters = call.args
+        normalized_query = " ".join(query.split())
+
+        assert "MATCH (s:Service" in normalized_query
+        assert "MERGE (s:Service" not in normalized_query
+        assert "source: $topology_source" in normalized_query
+        assert parameters["topology_source"] == TOPOLOGY_SOURCE
+
+
+def test_persistence_records_node_and_relationship_provenance():
+    """Observer nodes and AFFECTS relationships expose provenance."""
+
+    client = MagicMock()
+    client.execute_write.return_value = [
+        {
+            "incident_id": "inc_123",
+            "resource_id": "checkoutservice",
+        }
+    ]
+    persistence = IncidentPersistence(client)
+
+    persistence.persist_incident(make_incident())
+
+    query, parameters = client.execute_write.call_args.args
+    normalized_query = " ".join(query.split())
+
+    assert (
+        "i.created_at = coalesce(i.created_at, datetime())"
+        in normalized_query
+    )
+    assert "i.pipeline_version = $pipeline_version" in normalized_query
+    assert "MERGE (i)-[r:AFFECTS]->(s)" in normalized_query
+    assert (
+        "r.created_at = coalesce(r.created_at, datetime())"
+        in normalized_query
+    )
+    assert "r.pipeline_version = $pipeline_version" in normalized_query
+    assert parameters["source"] == OBSERVER_SOURCE
+    assert parameters["pipeline_version"] == OBSERVER_PIPELINE_VERSION
+
+
+def test_unknown_service_does_not_create_orphan_incident():
+    """No result means no topology match and must be reported explicitly."""
+
+    client = MagicMock()
+    client.execute_write.return_value = []
+    persistence = IncidentPersistence(client)
+
+    with pytest.raises(ValueError, match="operational topology"):
+        persistence.persist_incident(make_incident())
+
+    query = client.execute_write.call_args.args[0]
+    assert "MATCH (s:Service" in query
+    assert "MERGE (s:Service" not in query
+
+
+def test_ground_truth_incident_cannot_enter_observer_persistence():
+    """The persistence boundary enforces the Observer source label."""
+
+    contaminated = replace(
+        make_incident(),
+        source="RCAEVAL_GROUND_TRUTH",
+    )
+
+    with pytest.raises(ValueError, match="ECDT_OBSERVER"):
+        IncidentPersistence._incident_parameters(contaminated)

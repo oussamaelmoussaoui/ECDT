@@ -34,6 +34,11 @@ if TYPE_CHECKING:
     from src.knowledge_graph.neo4j_client import Neo4jClient
 
 
+OBSERVER_PIPELINE_VERSION = "phase3-structural-v1"
+OBSERVER_SOURCE = "ECDT_OBSERVER"
+TOPOLOGY_SOURCE = "topology"
+
+
 class IncidentPersistence:
     """
     Persistence layer for Observer-generated incidents.
@@ -93,9 +98,20 @@ class IncidentPersistence:
             )
 
         query = """
+        MATCH (s:Service {
+            id: $resource_id,
+            source: $topology_source
+        })
+
         MERGE (i:Incident {
             id: $incident_id
         })
+
+        ON CREATE SET
+            i.source = $source
+
+        WITH i, s
+        WHERE i.source = $source
 
         SET
             i.case_id = $case_id,
@@ -110,8 +126,10 @@ class IncidentPersistence:
             i.anomaly_score = $anomaly_score,
             i.detection_method = $detection_method,
             i.confidence = $confidence,
-            i.source = $source,
-            i.metadata = $metadata
+            i.metadata = $metadata,
+            i.created_at = coalesce(i.created_at, datetime()),
+            i.pipeline_version = $pipeline_version,
+            i.updated_at = datetime()
 
         RETURN
             i.id AS incident_id,
@@ -128,7 +146,10 @@ class IncidentPersistence:
             i.detection_method AS detection_method,
             i.confidence AS confidence,
             i.source AS source,
-            i.metadata AS metadata
+            i.metadata AS metadata,
+            i.created_at AS created_at,
+            i.updated_at AS updated_at,
+            i.pipeline_version AS pipeline_version
         """
 
         result = self.client.execute_write(
@@ -139,8 +160,11 @@ class IncidentPersistence:
         )
 
         if not result:
-            raise RuntimeError(
-                "Neo4j did not return the persisted incident."
+            raise ValueError(
+                "Unable to create Observer incident because the target "
+                f"Service '{incident.resource_id}' is not part of the "
+                "operational topology, or the incident ID belongs to "
+                "another source."
             )
 
         return result[0]
@@ -176,14 +200,21 @@ class IncidentPersistence:
 
         query = """
         MATCH (i:Incident {
-            id: $incident_id
+            id: $incident_id,
+            source: $source
         })
 
         MATCH (s:Service {
-            id: $resource_id
+            id: $resource_id,
+            source: $topology_source
         })
 
-        MERGE (i)-[:AFFECTS]->(s)
+        MERGE (i)-[r:AFFECTS]->(s)
+        SET
+            r.created_at = coalesce(r.created_at, datetime()),
+            r.source = $source,
+            r.pipeline_version = $pipeline_version,
+            r.updated_at = datetime()
 
         RETURN
             i.id AS incident_id,
@@ -195,6 +226,9 @@ class IncidentPersistence:
             {
                 "incident_id": incident.incident_id,
                 "resource_id": incident.resource_id,
+                "source": OBSERVER_SOURCE,
+                "topology_source": TOPOLOGY_SOURCE,
+                "pipeline_version": OBSERVER_PIPELINE_VERSION,
             },
         )
 
@@ -203,7 +237,7 @@ class IncidentPersistence:
                 "Unable to link incident to resource. "
                 f"Incident '{incident.incident_id}' or "
                 f"Service '{incident.resource_id}' "
-                "does not exist."
+                "does not exist in the operational topology."
             )
 
         return result[0]
@@ -234,9 +268,18 @@ class IncidentPersistence:
         # Match the known topology first. If the service does not exist, the
         # query returns no row and no orphan Incident node is created.
         query = """
-        MATCH (s:Service {id: $resource_id})
+        MATCH (s:Service {
+            id: $resource_id,
+            source: $topology_source
+        })
 
         MERGE (i:Incident {id: $incident_id})
+
+        ON CREATE SET
+            i.source = $source
+
+        WITH i, s
+        WHERE i.source = $source
 
         SET
             i.case_id = $case_id,
@@ -251,15 +294,26 @@ class IncidentPersistence:
             i.anomaly_score = $anomaly_score,
             i.detection_method = $detection_method,
             i.confidence = $confidence,
-            i.source = $source,
-            i.metadata = $metadata
+            i.metadata = $metadata,
+            i.created_at = coalesce(i.created_at, datetime()),
+            i.pipeline_version = $pipeline_version,
+            i.updated_at = datetime()
 
-        MERGE (i)-[:AFFECTS]->(s)
+        MERGE (i)-[r:AFFECTS]->(s)
+        SET
+            r.created_at = coalesce(r.created_at, datetime()),
+            r.source = $source,
+            r.pipeline_version = $pipeline_version,
+            r.updated_at = datetime()
 
         RETURN
             i.id AS incident_id,
             i.case_id AS case_id,
-            s.id AS resource_id
+            s.id AS resource_id,
+            i.source AS source,
+            i.created_at AS created_at,
+            i.updated_at AS updated_at,
+            i.pipeline_version AS pipeline_version
         """
 
         result = self.client.execute_write(
@@ -270,7 +324,9 @@ class IncidentPersistence:
         if not result:
             raise ValueError(
                 "Unable to persist incident because Service "
-                f"'{incident.resource_id}' does not exist."
+                f"'{incident.resource_id}' does not exist in the "
+                "operational topology, or the incident ID belongs "
+                "to another source."
             )
 
         persisted = result[0]
@@ -305,7 +361,8 @@ class IncidentPersistence:
 
         query = """
         MATCH (i:Incident {
-            id: $incident_id
+            id: $incident_id,
+            source: $source
         })
 
         OPTIONAL MATCH
@@ -327,6 +384,9 @@ class IncidentPersistence:
             i.confidence AS confidence,
             i.source AS source,
             i.metadata AS metadata,
+            i.created_at AS created_at,
+            i.updated_at AS updated_at,
+            i.pipeline_version AS pipeline_version,
             s.id AS affected_resource
         """
 
@@ -334,6 +394,7 @@ class IncidentPersistence:
             query,
             {
                 "incident_id": incident_id,
+                "source": OBSERVER_SOURCE,
             },
         )
 
@@ -368,11 +429,13 @@ class IncidentPersistence:
         query = """
         MATCH
             (i:Incident {
-                id: $incident_id
+                id: $incident_id,
+                source: $source
             })
             -[:AFFECTS]->
             (s:Service {
-                id: $resource_id
+                id: $resource_id,
+                source: $topology_source
             })
 
         RETURN count(*) AS count
@@ -383,6 +446,8 @@ class IncidentPersistence:
             {
                 "incident_id": incident_id,
                 "resource_id": resource_id,
+                "source": OBSERVER_SOURCE,
+                "topology_source": TOPOLOGY_SOURCE,
             },
         )
 
@@ -410,6 +475,19 @@ class IncidentPersistence:
             incident.metadata,
             context="Neo4j incident persistence",
         )
+
+        incident_source = (
+            incident.source.value
+            if hasattr(incident.source, "value")
+            else str(incident.source)
+        )
+
+        if incident_source != OBSERVER_SOURCE:
+            raise ValueError(
+                "Observer persistence only accepts incidents whose "
+                f"source is {OBSERVER_SOURCE!r}."
+            )
+
         return {
             "incident_id": incident.incident_id,
 
@@ -479,16 +557,11 @@ class IncidentPersistence:
                 incident.confidence
             ),
 
-            "source": (
-                incident.source.value
-                if hasattr(
-                    incident.source,
-                    "value",
-                )
-                else str(
-                    incident.source
-                )
-            ),
+            "source": OBSERVER_SOURCE,
+
+            "topology_source": TOPOLOGY_SOURCE,
+
+            "pipeline_version": OBSERVER_PIPELINE_VERSION,
 
             # Neo4j does not accept Map{} as a property.
             # Store structured metadata as JSON.

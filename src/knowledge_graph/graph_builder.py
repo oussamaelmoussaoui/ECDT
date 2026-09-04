@@ -44,6 +44,11 @@ from typing import Any
 from src.knowledge_graph.neo4j_client import Neo4jClient
 
 
+GRAPH_BUILDER_VERSION = "phase3-structural-v1"
+GROUND_TRUTH_SOURCE = "RCAEVAL_GROUND_TRUTH"
+TOPOLOGY_SOURCE = "topology"
+
+
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
@@ -478,9 +483,12 @@ def create_services(
         s.source =
             CASE
                 WHEN $service IN $topology_services
-                THEN "topology"
+                THEN $topology_source
                 ELSE "ground_truth"
-            END
+            END,
+        s.created_at = coalesce(s.created_at, datetime()),
+        s.pipeline_version = $pipeline_version,
+        s.updated_at = datetime()
     RETURN s.id AS id
     """
 
@@ -489,6 +497,8 @@ def create_services(
         {
             "service": row["service"],
             "topology_services": list(topology_services),
+            "topology_source": TOPOLOGY_SOURCE,
+            "pipeline_version": GRAPH_BUILDER_VERSION,
         }
         for row in service_rows
     ]
@@ -541,14 +551,33 @@ def create_dependencies(
     """
 
     query = """
-    MATCH (source:Service {id: $source_service})
-    MATCH (target:Service {id: $target_service})
-    MERGE (source)-[:DEPENDS_ON]->(target)
+    MATCH (source:Service {
+        id: $source_service,
+        source: $topology_source
+    })
+    MATCH (target:Service {
+        id: $target_service,
+        source: $topology_source
+    })
+    MERGE (source)-[r:DEPENDS_ON]->(target)
+    SET
+        r.created_at = coalesce(r.created_at, datetime()),
+        r.source = $relationship_source,
+        r.pipeline_version = $pipeline_version,
+        r.updated_at = datetime()
     """
 
     count = client.execute_many(
         query,
-        dependencies,
+        [
+            {
+                **dependency,
+                "relationship_source": "TOPOLOGY_EXTRACTOR",
+                "topology_source": TOPOLOGY_SOURCE,
+                "pipeline_version": GRAPH_BUILDER_VERSION,
+            }
+            for dependency in dependencies
+        ],
     )
 
     print(
@@ -572,7 +601,8 @@ def create_incidents(
     query = """
     MERGE (i:Incident {id: $case})
     SET
-        i.source = 'RCAEVAL_GROUND_TRUTH',
+        i.source = $incident_source,
+        i.case_id = $case,
         i.case = $case,
         i.dataset = $dataset,
         i.fault = $fault,
@@ -582,12 +612,22 @@ def create_incidents(
         i.inject_time = $inject_time,
         i.time_start = $time_start,
         i.time_end = $time_end,
-        i.duration_minutes = $duration_minutes
+        i.duration_minutes = $duration_minutes,
+        i.created_at = coalesce(i.created_at, datetime()),
+        i.pipeline_version = $pipeline_version,
+        i.updated_at = datetime()
     """
 
     count = client.execute_many(
         query,
-        incidents,
+        [
+            {
+                **incident,
+                "incident_source": GROUND_TRUTH_SOURCE,
+                "pipeline_version": GRAPH_BUILDER_VERSION,
+            }
+            for incident in incidents
+        ],
     )
 
     print(
@@ -619,15 +659,25 @@ def create_root_cause_relationships(
             "root_cause_service": incident[
                 "root_cause_service"
             ],
+            "relationship_source": GROUND_TRUTH_SOURCE,
+            "pipeline_version": GRAPH_BUILDER_VERSION,
         }
         for incident in incidents
         if incident["root_cause_service"]
     ]
 
     query = """
-    MATCH (i:Incident {id: $case})
+    MATCH (i:Incident {
+        id: $case,
+        source: $relationship_source
+    })
     MATCH (s:Service {id: $root_cause_service})
-    MERGE (i)-[:CAUSED_BY]->(s)
+    MERGE (i)-[r:CAUSED_BY]->(s)
+    SET
+        r.created_at = coalesce(r.created_at, datetime()),
+        r.source = $relationship_source,
+        r.pipeline_version = $pipeline_version,
+        r.updated_at = datetime()
     """
 
     count = client.execute_many(
@@ -685,6 +735,25 @@ def get_graph_statistics(
             MATCH (:Incident)-[r:CAUSED_BY]->(:Service)
             RETURN count(r) AS count
         """,
+        "affects": """
+            MATCH (:Incident)-[r:AFFECTS]->(:Service)
+            RETURN count(r) AS count
+        """,
+        "ground_truth_provenance_complete": """
+            MATCH (i:Incident {
+                source: 'RCAEVAL_GROUND_TRUTH'
+            })
+            WHERE i.case_id IS NOT NULL
+              AND i.created_at IS NOT NULL
+              AND i.pipeline_version IS NOT NULL
+            RETURN count(i) AS count
+        """,
+        "duplicate_affects": """
+            MATCH (i:Incident)-[r:AFFECTS]->(s:Service)
+            WITH i, s, count(r) AS copies
+            WHERE copies > 1
+            RETURN coalesce(sum(copies - 1), 0) AS count
+        """,
     }
 
     statistics: dict[str, int] = {}
@@ -724,7 +793,9 @@ def verify_graph(
         "services": 39,
         "dependencies": 64,
         "ground_truth_incidents": 60,
+        "ground_truth_provenance_complete": 60,
         "caused_by": 60,
+        "duplicate_affects": 0,
     }
 
     success = True

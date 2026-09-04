@@ -1,5 +1,8 @@
 import math
 import inspect
+
+import pytest
+
 from scripts import run_observer_pipeline as pipeline
 
 
@@ -135,7 +138,8 @@ def test_summarize_metric_value_rejections():
         item["count"]
         for item in summary["details"]
     ) == 4
-    
+
+
 def test_rejection_summary_classifies_series_health():
     """The audit must distinguish useful and fully empty series."""
 
@@ -217,7 +221,8 @@ def test_rejection_summary_classifies_series_health():
         "fully_valid"
     )
     assert details["service-c_socket"]["rejected_rows"] == 0
-    
+
+
 def test_pipeline_does_not_reference_caused_by():
     """The operational pipeline must not consult RCAEval root causes."""
 
@@ -226,3 +231,28 @@ def test_pipeline_does_not_reference_caused_by():
     )
 
     assert "CAUSED_BY" not in run_source.upper()
+
+
+def test_topology_coverage_ratio():
+    """Coverage is deterministic and explicit for empty input."""
+
+    assert pipeline._topology_coverage_ratio(4, 3) == 0.75
+    assert pipeline._topology_coverage_ratio(4, 4) == 1.0
+    assert pipeline._topology_coverage_ratio(0, 0) is None
+
+    with pytest.raises(ValueError):
+        pipeline._topology_coverage_ratio(3, 4)
+
+    with pytest.raises(ValueError):
+        pipeline._topology_coverage_ratio(-1, 0)
+
+
+def test_pipeline_filters_operational_topology_by_source():
+    """Ground-truth-only services cannot become Observer resources."""
+
+    run_source = inspect.getsource(pipeline.run)
+
+    assert "source: $topology_source" in run_source
+    assert '"topology_source": "topology"' in run_source
+    assert '"topology_coverage_ratio"' in run_source
+    assert '"outside_topology_services"' in run_source

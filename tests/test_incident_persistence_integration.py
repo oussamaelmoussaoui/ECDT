@@ -9,6 +9,7 @@ Requires:
 """
 
 import os
+from dataclasses import replace
 
 import pytest
 
@@ -115,7 +116,8 @@ def test_service_exists(
     result = neo4j_client.execute(
         """
         MATCH (s:Service {
-            id: $resource_id
+            id: $resource_id,
+            source: 'topology'
         })
         RETURN s.id AS resource_id
         """,
@@ -347,8 +349,7 @@ def test_real_incident_persistence_is_idempotent(
     neo4j_client,
 ):
     """
-    Persisting the same Incident twice must not create
-    duplicate Incident nodes.
+    Repeated persistence must keep one node and one AFFECTS edge.
     """
 
     anomaly = make_real_anomaly()
@@ -361,20 +362,34 @@ def test_real_incident_persistence_is_idempotent(
         neo4j_client
     )
 
-    persistence.create_incident(
-        incident
-    )
+    ground_truth_before = neo4j_client.execute(
+        """
+        MATCH (i:Incident {
+            source: 'RCAEVAL_GROUND_TRUTH'
+        })
+        RETURN count(i) AS count
+        """
+    )[0]["count"]
 
-    persistence.create_incident(
-        incident
-    )
+    persistence.persist_incident(incident)
+    persistence.persist_incident(incident)
 
     result = neo4j_client.execute(
         """
         MATCH (i:Incident {
-            id: $incident_id
+            id: $incident_id,
+            source: 'ECDT_OBSERVER'
         })
-        RETURN count(i) AS count
+        OPTIONAL MATCH
+            (i)-[r:AFFECTS]->(s:Service {
+                source: 'topology'
+            })
+        RETURN
+            count(DISTINCT i) AS incident_count,
+            count(r) AS affects_count,
+            i.case_id AS case_id,
+            i.created_at IS NOT NULL AS has_created_at,
+            i.pipeline_version AS pipeline_version
         """,
         {
             "incident_id": incident.incident_id,
@@ -383,4 +398,99 @@ def test_real_incident_persistence_is_idempotent(
 
     assert len(result) == 1
 
-    assert result[0]["count"] == 1
+    row = result[0]
+
+    assert row["incident_count"] == 1
+    assert row["affects_count"] == 1
+    assert row["case_id"] == CASE_ID
+    assert row["has_created_at"] is True
+    assert row["pipeline_version"]
+
+    ground_truth_after = neo4j_client.execute(
+        """
+        MATCH (i:Incident {
+            source: 'RCAEVAL_GROUND_TRUTH'
+        })
+        RETURN count(i) AS count
+        """
+    )[0]["count"]
+
+    assert ground_truth_after == ground_truth_before
+
+
+def test_unknown_service_is_not_created_implicitly(
+    neo4j_client,
+):
+    """Observer persistence must reject resources outside topology."""
+
+    unknown_service = "service_outside_operational_topology"
+    anomaly = replace(
+        make_real_anomaly(),
+        event_id="integration_event_unknown_service",
+        resource_id=unknown_service,
+    )
+    incident = build_incident(anomaly)
+    persistence = IncidentPersistence(neo4j_client)
+
+    with pytest.raises(ValueError, match="operational topology"):
+        persistence.persist_incident(incident)
+
+    result = neo4j_client.execute(
+        """
+        OPTIONAL MATCH (s:Service {id: $service_id})
+        OPTIONAL MATCH (i:Incident {id: $incident_id})
+        RETURN count(s) AS services, count(i) AS incidents
+        """,
+        {
+            "service_id": unknown_service,
+            "incident_id": incident.incident_id,
+        },
+    )
+
+    assert result == [
+        {
+            "services": 0,
+            "incidents": 0,
+        }
+    ]
+
+
+def test_ground_truth_only_service_is_not_operational(
+    neo4j_client,
+):
+    """An evaluation-only Service must not become an Observer target."""
+
+    rows = neo4j_client.execute(
+        """
+        MATCH (s:Service {source: 'ground_truth'})
+        RETURN s.id AS service_id
+        ORDER BY service_id
+        LIMIT 1
+        """
+    )
+
+    if not rows:
+        pytest.skip("No ground-truth-only Service exists in this graph.")
+
+    service_id = rows[0]["service_id"]
+    anomaly = replace(
+        make_real_anomaly(),
+        event_id="integration_event_ground_truth_service",
+        resource_id=service_id,
+    )
+    incident = build_incident(anomaly)
+
+    with pytest.raises(ValueError, match="operational topology"):
+        IncidentPersistence(neo4j_client).persist_incident(incident)
+
+    incident_rows = neo4j_client.execute(
+        """
+        MATCH (i:Incident {id: $incident_id})
+        RETURN count(i) AS count
+        """,
+        {
+            "incident_id": incident.incident_id,
+        },
+    )
+
+    assert incident_rows[0]["count"] == 0

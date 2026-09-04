@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
+from unittest.mock import MagicMock
 
 import pytest
 
@@ -55,6 +56,16 @@ from src.knowledge_graph.graph_queries import (
     get_service_neighborhood,
     get_graph_statistics,
     get_graph_overview,
+    get_operational_graph_view,
+    get_evaluation_graph_view,
+    GROUND_TRUTH_SOURCE,
+    OBSERVER_SOURCE,
+    TOPOLOGY_SOURCE,
+)
+
+from src.knowledge_graph.graph_builder import (
+    GRAPH_BUILDER_VERSION,
+    create_incidents,
 )
 
 
@@ -72,6 +83,80 @@ REFERENCE_INCIDENT = "re2ob_checkoutservice_cpu_1"
 
 
 # ---------------------------------------------------------------------------
+# Structural contracts independent of a live Neo4j instance
+# ---------------------------------------------------------------------------
+
+
+def test_operational_view_isolated_from_ground_truth():
+    """The operational view must not read evaluation relationships."""
+
+    client = MagicMock()
+    client.execute.return_value = []
+
+    get_operational_graph_view(client, REFERENCE_INCIDENT)
+
+    query, parameters = client.execute.call_args.args
+
+    assert "CAUSED_BY" not in query.upper()
+    assert "AFFECTS" in query.upper()
+    assert "DEPENDS_ON" in query.upper()
+    assert parameters == {
+        "case_id": REFERENCE_INCIDENT,
+        "incident_source": OBSERVER_SOURCE,
+        "topology_source": TOPOLOGY_SOURCE,
+    }
+
+
+def test_evaluation_view_is_explicitly_ground_truth_only():
+    """RCAEval labels are available only through the evaluation view."""
+
+    client = MagicMock()
+    client.execute.return_value = []
+
+    get_evaluation_graph_view(client, REFERENCE_INCIDENT)
+
+    query, parameters = client.execute.call_args.args
+
+    assert "CAUSED_BY" in query.upper()
+    assert parameters["incident_source"] == GROUND_TRUTH_SOURCE
+
+
+def test_graph_builder_records_ground_truth_provenance():
+    """Ground-truth incidents receive stable provenance properties."""
+
+    client = MagicMock()
+    client.execute_many.return_value = 1
+    incidents = [
+        {
+            "case": REFERENCE_INCIDENT,
+            "dataset": "RE2-OB",
+            "fault": "cpu",
+            "fault_description": "CPU pressure",
+            "suite": "re2ob",
+            "system_name": "online-boutique",
+            "inject_time": 1705354566000,
+            "time_start": 1705353846000,
+            "time_end": 1705355286000,
+            "duration_minutes": 24.0,
+        }
+    ]
+
+    assert create_incidents(client, incidents) == 1
+
+    query, parameters = client.execute_many.call_args.args
+    normalized_query = " ".join(query.split())
+
+    assert "i.case_id = $case" in normalized_query
+    assert (
+        "i.created_at = coalesce(i.created_at, datetime())"
+        in normalized_query
+    )
+    assert "i.pipeline_version = $pipeline_version" in normalized_query
+    assert parameters[0]["incident_source"] == GROUND_TRUTH_SOURCE
+    assert parameters[0]["pipeline_version"] == GRAPH_BUILDER_VERSION
+
+
+# ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
 
@@ -84,12 +169,14 @@ def neo4j_client():
     The connection is opened once and closed after all tests.
     """
 
-    client = Neo4jClient()
+    client = None
 
     try:
+        client = Neo4jClient()
         client.verify_connectivity()
     except Exception as exc:
-        client.close()
+        if client is not None:
+            client.close()
 
         pytest.skip(
             f"Neo4j is not available: {exc}"
@@ -146,6 +233,13 @@ def test_graph_statistics(neo4j_client):
     assert stats["dependencies"] == EXPECTED_DEPENDENCIES
 
     assert stats["caused_by"] == EXPECTED_CAUSED_BY
+
+    assert (
+        stats["ground_truth_provenance_complete"]
+        == EXPECTED_INCIDENTS
+    )
+
+    assert stats["duplicate_affects"] == 0
 
 
 # ---------------------------------------------------------------------------
@@ -525,6 +619,25 @@ def test_graph_overview(neo4j_client):
         in overview["relationship_types"]
     )
 
+    assert (
+        "AFFECTS"
+        in overview["relationship_types"]
+    )
+
+    operational_contract = overview[
+        "view_contracts"
+    ]["operational"]
+
+    assert operational_contract["ground_truth_access"] is False
+    assert operational_contract["incident_source"] == OBSERVER_SOURCE
+
+    evaluation_contract = overview[
+        "view_contracts"
+    ]["evaluation"]
+
+    assert evaluation_contract["ground_truth_access"] is True
+    assert evaluation_contract["incident_source"] == GROUND_TRUTH_SOURCE
+
 
 # ---------------------------------------------------------------------------
 # Graph consistency
@@ -628,6 +741,35 @@ def test_no_broken_caused_by_relationships(
     assert row["total"] == EXPECTED_CAUSED_BY
 
     assert row["valid"] == EXPECTED_CAUSED_BY
+
+
+def test_observer_incidents_have_one_operational_affects(
+    neo4j_client,
+):
+    """Every Observer incident targets one topology Service exactly once."""
+
+    result = neo4j_client.execute(
+        """
+        MATCH (i:Incident {
+            source: 'ECDT_OBSERVER'
+        })
+        OPTIONAL MATCH
+            (i)-[r:AFFECTS]->(s:Service)
+
+        WITH i, count(r) AS links, collect(s.source) AS service_sources
+
+        RETURN
+            i.id AS incident_id,
+            links,
+            service_sources
+
+        ORDER BY incident_id
+        """
+    )
+
+    for row in result:
+        assert row["links"] == 1
+        assert row["service_sources"] == [TOPOLOGY_SOURCE]
 
 
 # ---------------------------------------------------------------------------
