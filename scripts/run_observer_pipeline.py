@@ -629,10 +629,13 @@ def _summarize_temporal_context(temporal_context: Any) -> dict[str, Any]:
         "temporal_data_completeness_ratio": get_value(
             "temporal_data_completeness_ratio"
         ),
-        "rows_retrieved": len(observations),
-        "numeric_observation_count": statistics.get(
-            "observation_count",
-            0,
+        "rows_retrieved": get_value(
+            "rows_retrieved",
+            len(observations),
+        ),
+        "numeric_observation_count": get_value(
+            "numeric_observation_count",
+            statistics.get("observation_count", 0),
         ),
         "statistics": statistics,
     }
@@ -725,8 +728,14 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     from src.agents.observer.observer_agent import ObserverAgent
     from src.agents.observer.timescale_consumer import TimescaleConsumer
     from src.digital_twin.timescale_client import TimescaleClient
-    from src.digital_twin.timeseries_ingestion import ingest_normalized_events
-    from src.digital_twin.timeseries_schema import METRIC_TABLE, initialize_schema
+    from src.digital_twin.timeseries_ingestion import (
+        determine_case_ingestion_action,
+        ingest_normalized_events,
+    )
+    from src.digital_twin.timeseries_queries import (
+        get_case_metric_ingestion_state,
+    )
+    from src.digital_twin.timeseries_schema import initialize_schema
     from src.ingestion.anomaly_detector import FAULT_TO_INCIDENT, create_detector
     from src.ingestion.dataset_loader import create_default_loader
     from src.ingestion.models import DetectionMethod
@@ -793,39 +802,25 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         # réutilise strictement le schéma existant et ses opérations IF NOT EXISTS.
         initialize_schema(timescale)
 
-        state_rows = timescale.execute(
-            f"""
-            SELECT
-                COUNT(*) AS total_rows,
-                COUNT(DISTINCT (resource_id, timestamp, metric_name))
-                    AS unique_rows
-            FROM {METRIC_TABLE}
-            WHERE case_id = %s;
-            """,
-            (case_info.case_id,),
-            fetch=True,
+        state = get_case_metric_ingestion_state(
+            timescale,
+            case_info.case_id,
         )
-        state = state_rows[0] if state_rows else {}
-        existing_metric_rows = int(state.get("total_rows") or 0)
-        existing_unique_metric_rows = int(state.get("unique_rows") or 0)
+        existing_metric_rows = state["total_rows"]
+        existing_unique_metric_rows = state["unique_rows"]
 
-        if existing_metric_rows != existing_unique_metric_rows:
-            raise RuntimeError(
-                "TimescaleDB contient des doublons pour le cas "
-                f"{case_info.case_id!r} : {existing_metric_rows} lignes pour "
-                f"{existing_unique_metric_rows} clés temporelles uniques."
-            )
+        ingestion_action = determine_case_ingestion_action(
+            case_id=case_info.case_id,
+            expected_valid_rows=valid_metric_rows_count,
+            existing_rows=existing_metric_rows,
+            unique_rows=existing_unique_metric_rows,
+            skip_requested=args.skip_timescale_ingestion,
+        )
 
         inserted_metrics = 0
         ingestion_status: str
 
-        if existing_metric_rows == 0:
-            if args.skip_timescale_ingestion:
-                raise RuntimeError(
-                    "--skip-timescale-ingestion a été demandé, mais aucune "
-                    f"métrique n'existe pour le cas {case_info.case_id!r}."
-                )
-
+        if ingestion_action == "insert":
             LOGGER.info(
                 "Cas absent de TimescaleDB : ingestion de %d métriques",
                 valid_metric_rows_count,
@@ -840,26 +835,20 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 timescale,
                 valid_metric_rows,
             )
+            if inserted_metrics != valid_metric_rows_count:
+                raise RuntimeError(
+                    "L'ingestion TimescaleDB est incomplète pour le cas "
+                    f"{case_info.case_id!r} : {inserted_metrics} lignes "
+                    f"insérées sur {valid_metric_rows_count} attendues."
+                )
             ingestion_status = "inserted"
 
-        elif existing_metric_rows == valid_metric_rows_count:
-            ingestion_status = (
-                "skipped_by_flag"
-                if args.skip_timescale_ingestion
-                else "already_present"
-            )
+        else:
+            ingestion_status = ingestion_action
             LOGGER.info(
                 "Cas déjà complet dans TimescaleDB (%d métriques) : "
                 "aucune nouvelle insertion",
                 existing_metric_rows,
-            )
-
-        else:
-            raise RuntimeError(
-                "État TimescaleDB partiel ou incohérent pour le cas "
-                f"{case_info.case_id!r} : {existing_metric_rows} lignes "
-                f"existantes contre {valid_metric_rows_count} attendues. "
-                "Aucune insertion automatique n'a été effectuée."
             )
 
         timescale_case_rows_after = existing_metric_rows + inserted_metrics
@@ -1065,6 +1054,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "expected_valid_metric_rows": valid_metric_rows_count,
             "timescale_existing_rows_before": existing_metric_rows,
             "timescale_unique_rows_before": existing_unique_metric_rows,
+            "timescale_duplicate_rows_before": state["duplicate_rows"],
             "timescale_metrics_inserted": inserted_metrics,
             "timescale_case_rows_after": timescale_case_rows_after,
             "timescale_ingestion_status": ingestion_status,

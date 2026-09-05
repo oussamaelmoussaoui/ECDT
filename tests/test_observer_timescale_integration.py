@@ -5,6 +5,7 @@ These tests require a running ECDT TimescaleDB instance.
 """
 
 import os
+from datetime import datetime, timedelta, timezone
 
 import pytest
 
@@ -18,6 +19,10 @@ from src.agents.observer.timescale_consumer import (
 
 from src.digital_twin.timescale_client import (
     TimescaleClient,
+)
+
+from src.digital_twin.timeseries_queries import (
+    audit_metric_observation_duplicates,
 )
 
 from src.ingestion.models import (
@@ -34,6 +39,9 @@ METRIC_NAME = "checkoutservice_cpu"
 
 # 2024-01-15 21:24:06 UTC
 ANOMALY_TIMESTAMP = 1705353846
+
+# Injection-centered ten-minute window: 601 expected one-second samples.
+AUDIT_CENTER_TIMESTAMP = 1705354566
 
 
 def make_real_anomaly() -> AnomalyInput:
@@ -326,6 +334,41 @@ def test_observer_builds_real_temporal_context(
         statistics["anomaly_score"]
         == anomaly.score
     )
+
+    assert context.rows_retrieved == len(context.observations)
+    assert context.numeric_observation_count == (
+        statistics["observation_count"]
+    )
+    assert context.observed_unique_timestamp_count <= (
+        context.rows_retrieved
+    )
+    assert context.requested_duration_seconds == 600.0
+    assert context.temporal_data_completeness_ratio is not None
+
+
+def test_real_metric_window_contains_no_duplicate_timestamps(
+    timescale_client,
+):
+    """Audit the verified ten-minute TimescaleDB window without mutation."""
+
+    center = datetime.fromtimestamp(
+        AUDIT_CENTER_TIMESTAMP,
+        tz=timezone.utc,
+    )
+    result = audit_metric_observation_duplicates(
+        timescale_client,
+        case_id=CASE_ID,
+        resource_id=RESOURCE_ID,
+        metric_name=METRIC_NAME,
+        start_time=center - timedelta(minutes=5),
+        end_time=center + timedelta(minutes=5),
+    )
+
+    assert result["total_rows"] == 601
+    assert result["distinct_timestamps"] == 601
+    assert result["possible_duplicate_rows"] == 0
+
+
 def test_timescaledb_contains_no_ground_truth_labels(
     timescale_client,
 ):

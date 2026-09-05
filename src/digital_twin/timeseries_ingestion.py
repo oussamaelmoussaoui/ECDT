@@ -217,6 +217,68 @@ def _event_to_row(
 # ---------------------------------------------------------------------------
 
 
+def determine_case_ingestion_action(
+    *,
+    case_id: str,
+    expected_valid_rows: int,
+    existing_rows: int,
+    unique_rows: int,
+    skip_requested: bool = False,
+) -> str:
+    """Classify a case before ingestion without modifying TimescaleDB."""
+
+    if not case_id:
+        raise ValueError("case_id must not be empty.")
+
+    counts = {
+        "expected_valid_rows": expected_valid_rows,
+        "existing_rows": existing_rows,
+        "unique_rows": unique_rows,
+    }
+
+    for name, value in counts.items():
+        if not isinstance(value, int) or isinstance(value, bool):
+            raise TypeError(f"{name} must be an integer.")
+        if value < 0:
+            raise ValueError(f"{name} must be >= 0.")
+
+    if expected_valid_rows == 0:
+        raise RuntimeError(
+            f"No valid metric row is available for case {case_id!r}."
+        )
+
+    if unique_rows > existing_rows:
+        raise RuntimeError(
+            "TimescaleDB returned an incoherent metric state for case "
+            f"{case_id!r}: {existing_rows} rows for {unique_rows} "
+            "unique temporal keys."
+        )
+
+    if existing_rows != unique_rows:
+        raise RuntimeError(
+            f"TimescaleDB contains duplicates for case {case_id!r}: "
+            f"{existing_rows} rows for {unique_rows} unique temporal keys."
+        )
+
+    if existing_rows == 0:
+        if skip_requested:
+            raise RuntimeError(
+                "--skip-timescale-ingestion was requested, but no metric "
+                f"exists for case {case_id!r}."
+            )
+        return "insert"
+
+    if existing_rows == expected_valid_rows:
+        return "skipped_by_flag" if skip_requested else "already_present"
+
+    raise RuntimeError(
+        "TimescaleDB contains a partial or incoherent state for case "
+        f"{case_id!r}: {existing_rows} existing rows versus "
+        f"{expected_valid_rows} expected rows. No automatic insertion "
+        "was performed."
+    )
+
+
 def ingest_metric_events(
     client: TimescaleClient,
     events: Iterable[Any],

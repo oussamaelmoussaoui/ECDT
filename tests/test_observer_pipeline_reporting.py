@@ -256,3 +256,91 @@ def test_pipeline_filters_operational_topology_by_source():
     assert '"topology_source": "topology"' in run_source
     assert '"topology_coverage_ratio"' in run_source
     assert '"outside_topology_services"' in run_source
+
+
+@pytest.mark.parametrize(
+    ("existing_rows", "unique_rows", "skip_requested", "expected"),
+    [
+        (0, 0, False, "insert"),
+        (100, 100, False, "already_present"),
+        (100, 100, True, "skipped_by_flag"),
+    ],
+)
+def test_case_ingestion_action_for_consistent_states(
+    existing_rows,
+    unique_rows,
+    skip_requested,
+    expected,
+):
+    """Absent and complete cases must have deterministic actions."""
+
+    from src.digital_twin.timeseries_ingestion import (
+        determine_case_ingestion_action,
+    )
+
+    assert determine_case_ingestion_action(
+        case_id="case-001",
+        expected_valid_rows=100,
+        existing_rows=existing_rows,
+        unique_rows=unique_rows,
+        skip_requested=skip_requested,
+    ) == expected
+
+
+@pytest.mark.parametrize(
+    ("expected_rows", "existing_rows", "unique_rows", "skip_requested"),
+    [
+        (100, 0, 0, True),
+        (100, 50, 50, False),
+        (100, 100, 99, False),
+        (0, 0, 0, False),
+    ],
+)
+def test_case_ingestion_action_rejects_unsafe_states(
+    expected_rows,
+    existing_rows,
+    unique_rows,
+    skip_requested,
+):
+    """Missing, partial, and duplicate states must stop the ingestion."""
+
+    from src.digital_twin.timeseries_ingestion import (
+        determine_case_ingestion_action,
+    )
+
+    with pytest.raises(RuntimeError):
+        determine_case_ingestion_action(
+            case_id="case-001",
+            expected_valid_rows=expected_rows,
+            existing_rows=existing_rows,
+            unique_rows=unique_rows,
+            skip_requested=skip_requested,
+        )
+
+
+def test_temporal_context_summary_preserves_explicit_counts():
+    """Compact reporting must retain context/statistics coherence counters."""
+
+    summary = pipeline._summarize_temporal_context(
+        {
+            "resource_id": "checkoutservice",
+            "metric_name": "checkoutservice_cpu",
+            "observations": [{"value": 1.0}],
+            "rows_retrieved": 3,
+            "numeric_observation_count": 2,
+            "statistics": {"observation_count": 2},
+        }
+    )
+
+    assert summary["rows_retrieved"] == 3
+    assert summary["numeric_observation_count"] == 2
+    assert summary["statistics"]["observation_count"] == 2
+
+
+def test_pipeline_uses_shared_timescale_ingestion_guard():
+    """Orchestration must use the reusable audit and decision boundary."""
+
+    run_source = inspect.getsource(pipeline.run)
+
+    assert "get_case_metric_ingestion_state" in run_source
+    assert "determine_case_ingestion_action" in run_source

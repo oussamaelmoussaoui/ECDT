@@ -197,6 +197,10 @@ class TemporalContext:
 
     window_after_seconds: int
 
+    rows_retrieved: int = 0
+
+    numeric_observation_count: int = 0
+
     requested_start_timestamp: float | None = None
 
     requested_end_timestamp: float | None = None

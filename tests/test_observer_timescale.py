@@ -1,4 +1,6 @@
+import math
 from datetime import datetime, timedelta, timezone
+from unittest.mock import MagicMock
 
 import pytest
 
@@ -8,6 +10,11 @@ from src.agents.observer.models import (
 
 from src.agents.observer.timescale_consumer import (
     TimescaleConsumer,
+)
+
+from src.digital_twin.timeseries_queries import (
+    audit_metric_observation_duplicates,
+    get_case_metric_ingestion_state,
 )
 
 from src.ingestion.models import (
@@ -81,6 +88,24 @@ def test_timestamp_conversion_accepts_float():
     assert result.tzinfo == timezone.utc
 
 
+def test_timestamp_conversion_accepts_milliseconds():
+    """Second and millisecond epochs must resolve to the same instant."""
+
+    seconds = 1705354580
+
+    assert TimescaleConsumer.timestamp_to_datetime(
+        seconds
+    ) == TimescaleConsumer.timestamp_to_datetime(
+        seconds * 1000
+    )
+
+
+@pytest.mark.parametrize("timestamp", [math.nan, math.inf, -math.inf])
+def test_timestamp_conversion_rejects_non_finite(timestamp):
+    with pytest.raises(ValueError):
+        TimescaleConsumer.timestamp_to_datetime(timestamp)
+
+
 def test_consumer_requires_client():
 
     with pytest.raises(ValueError):
@@ -152,6 +177,10 @@ def test_compute_statistics():
         {
             "value": 30.0,
         },
+        {"value": None},
+        {"value": "invalid"},
+        {"value": math.nan},
+        {"value": math.inf},
     ]
 
     statistics = (
@@ -420,6 +449,30 @@ def test_temporal_completeness_empty_window():
     assert result["observed_unique_timestamp_count"] == 0
     assert result["missing_observation_count"] is None
     assert result["temporal_data_completeness_ratio"] is None
+
+
+def test_temporal_completeness_truncated_window():
+    """A shorter returned range must be visible as missing observations."""
+
+    observations = [
+        {"timestamp": timestamp, "value": 1.0}
+        for timestamp in (10.0, 20.0, 30.0)
+    ]
+
+    result = TimescaleConsumer.compute_temporal_completeness(
+        observations,
+        requested_start_timestamp=0.0,
+        requested_end_timestamp=40.0,
+    )
+
+    assert result["actual_coverage_duration_seconds"] == 20.0
+    assert result["estimated_sampling_interval_seconds"] == 10.0
+    assert result["expected_observation_count"] == 5
+    assert result["observed_unique_timestamp_count"] == 3
+    assert result["missing_observation_count"] == 2
+    assert result["temporal_data_completeness_ratio"] == pytest.approx(0.6)
+
+
 def test_get_temporal_context_reports_completeness():
     """The returned context must expose effective window completeness."""
 
@@ -482,5 +535,60 @@ def test_get_temporal_context_reports_completeness():
     assert context.estimated_sampling_interval_seconds == 60.0
     assert context.expected_observation_count == 3
     assert context.observed_unique_timestamp_count == 3
+    assert context.rows_retrieved == 3
+    assert context.numeric_observation_count == 3
+    assert context.numeric_observation_count == (
+        context.statistics["observation_count"]
+    )
     assert context.missing_observation_count == 0
     assert context.temporal_data_completeness_ratio == 1.0
+
+
+def test_case_metric_ingestion_state_reports_duplicates():
+    client = MagicMock()
+    client.execute.return_value = [
+        {"total_rows": 12, "unique_rows": 10}
+    ]
+
+    result = get_case_metric_ingestion_state(client, "case-001")
+
+    assert result == {
+        "total_rows": 12,
+        "unique_rows": 10,
+        "duplicate_rows": 2,
+    }
+
+
+def test_metric_duplicate_audit_is_non_destructive_and_bounded():
+    client = MagicMock()
+    client.execute.return_value = [
+        {"total_rows": 601, "distinct_timestamps": 601}
+    ]
+    start = datetime(2024, 1, 1, tzinfo=timezone.utc)
+    end = start + timedelta(minutes=10)
+
+    result = audit_metric_observation_duplicates(
+        client,
+        case_id="case-001",
+        resource_id="checkoutservice",
+        metric_name="checkoutservice_cpu",
+        start_time=start,
+        end_time=end,
+    )
+
+    query = client.execute.call_args.args[0].upper()
+    parameters = client.execute.call_args.args[1]
+
+    assert "SELECT" in query
+    assert "DELETE" not in query
+    assert "UPDATE" not in query
+    assert parameters == (
+        "case-001",
+        "checkoutservice",
+        "checkoutservice_cpu",
+        start,
+        end,
+    )
+    assert result["total_rows"] == 601
+    assert result["distinct_timestamps"] == 601
+    assert result["possible_duplicate_rows"] == 0

@@ -97,9 +97,8 @@ class TimescaleConsumer:
         timestamp: int | float,
     ) -> datetime:
         """
-        Convert an Observer Unix timestamp in seconds into a timezone-aware
-        UTC datetime.  Phase 2 millisecond timestamps are normalized by
-        ObserverAgent at the boundary between the two phases.
+        Convert an Observer Unix timestamp in seconds or milliseconds into
+        a timezone-aware UTC datetime.
 
         Example:
 
@@ -114,13 +113,26 @@ class TimescaleConsumer:
         except (TypeError, ValueError) as exc:
             raise ValueError(
                 "Anomaly timestamp must be a valid Unix "
-                "epoch timestamp in seconds."
+                "epoch timestamp."
             ) from exc
 
-        return datetime.fromtimestamp(
-            timestamp_value,
-            tz=timezone.utc,
-        )
+        if not isfinite(timestamp_value):
+            raise ValueError(
+                "Anomaly timestamp must be finite."
+            )
+
+        if abs(timestamp_value) >= 10_000_000_000:
+            timestamp_value /= 1000.0
+
+        try:
+            return datetime.fromtimestamp(
+                timestamp_value,
+                tz=timezone.utc,
+            )
+        except (OverflowError, OSError, ValueError) as exc:
+            raise ValueError(
+                "Anomaly timestamp is outside the supported range."
+            ) from exc
 
     # ------------------------------------------------------------------
     # Query TimescaleDB
@@ -255,6 +267,9 @@ class TimescaleConsumer:
                 numeric_value = float(value)
 
             except (TypeError, ValueError):
+                continue
+
+            if not isfinite(numeric_value):
                 continue
 
             values.append(numeric_value)
@@ -534,6 +549,12 @@ class TimescaleConsumer:
             window_before_seconds=window_seconds,
 
             window_after_seconds=window_seconds,
+
+            rows_retrieved=len(metric_observations),
+
+            numeric_observation_count=int(
+                statistics["observation_count"]
+            ),
 
             requested_start_timestamp=(
                 temporal_completeness[

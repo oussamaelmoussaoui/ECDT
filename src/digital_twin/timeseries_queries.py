@@ -380,6 +380,105 @@ def list_resources(
 
 
 # ---------------------------------------------------------------------------
+# Non-destructive integrity audits
+# ---------------------------------------------------------------------------
+
+
+def get_case_metric_ingestion_state(
+    client: TimescaleClient,
+    case_id: str,
+) -> dict[str, int]:
+    """Count stored rows and unique temporal keys for one case."""
+
+    if not case_id:
+        raise ValueError("case_id must not be empty.")
+
+    query = f"""
+    SELECT
+        COUNT(*) AS total_rows,
+        COUNT(
+            DISTINCT (
+                resource_id,
+                timestamp,
+                metric_name
+            )
+        ) AS unique_rows
+    FROM {METRIC_TABLE}
+    WHERE case_id = %s;
+    """
+
+    rows = client.execute(query, (case_id,), fetch=True)
+    row = rows[0] if rows else {}
+    total_rows = int(row.get("total_rows") or 0)
+    unique_rows = int(row.get("unique_rows") or 0)
+
+    return {
+        "total_rows": total_rows,
+        "unique_rows": unique_rows,
+        "duplicate_rows": max(total_rows - unique_rows, 0),
+    }
+
+
+def audit_metric_observation_duplicates(
+    client: TimescaleClient,
+    *,
+    case_id: str,
+    resource_id: str,
+    metric_name: str,
+    start_time: datetime | None = None,
+    end_time: datetime | None = None,
+) -> dict[str, Any]:
+    """Audit possible duplicate timestamps without changing stored data."""
+
+    required = {
+        "case_id": case_id,
+        "resource_id": resource_id,
+        "metric_name": metric_name,
+    }
+    for name, value in required.items():
+        if not value:
+            raise ValueError(f"{name} must not be empty.")
+
+    if start_time is not None and end_time is not None and end_time < start_time:
+        raise ValueError("end_time must not precede start_time.")
+
+    query = f"""
+    SELECT
+        COUNT(*) AS total_rows,
+        COUNT(DISTINCT timestamp) AS distinct_timestamps
+    FROM {METRIC_TABLE}
+    WHERE case_id = %s
+      AND resource_id = %s
+      AND metric_name = %s
+    """
+    parameters: list[Any] = [case_id, resource_id, metric_name]
+
+    if start_time is not None:
+        query += "\n    AND timestamp >= %s"
+        parameters.append(start_time)
+    if end_time is not None:
+        query += "\n    AND timestamp <= %s"
+        parameters.append(end_time)
+    query += ";"
+
+    rows = client.execute(query, tuple(parameters), fetch=True)
+    row = rows[0] if rows else {}
+    total_rows = int(row.get("total_rows") or 0)
+    distinct_timestamps = int(row.get("distinct_timestamps") or 0)
+
+    return {
+        "case_id": case_id,
+        "resource_id": resource_id,
+        "metric_name": metric_name,
+        "start_time": start_time,
+        "end_time": end_time,
+        "total_rows": total_rows,
+        "distinct_timestamps": distinct_timestamps,
+        "possible_duplicate_rows": max(total_rows - distinct_timestamps, 0),
+    }
+
+
+# ---------------------------------------------------------------------------
 # Count
 # ---------------------------------------------------------------------------
 
